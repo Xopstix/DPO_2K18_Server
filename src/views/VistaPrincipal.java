@@ -38,10 +38,10 @@ public class VistaPrincipal extends JFrame {
         this.jpCentral.add(jp4);
         this.add(jpCentral);
 
-        this.setSize(820, 450);
+        this.setSize(400, 200);
         this.setResizable(true);
         this.setTitle("LS Organizer");
-        this.setDefaultCloseOperation(3);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
     }

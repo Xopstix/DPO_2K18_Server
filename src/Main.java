@@ -19,7 +19,7 @@ public class Main {
         prueba = conn.selectQuery("SELECT * FROM usuarios");
 
         try {
-            //Recorremos toda la tabla de usuarios de la BBDD
+            //Recorremos toda la tabla de usuarios de la BBDD.
             while (prueba.next())
             {
                 //Especificamente le ponenmos que campos queremos leer de la BBDD

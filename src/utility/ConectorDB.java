@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Created by manusahun on 14/3/18.
+ */
+
 public class ConectorDB {
 
     static String userName;

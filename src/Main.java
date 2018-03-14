@@ -1,4 +1,5 @@
 import utility.ConectorDB;
+import views.VistaPrincipal;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ public class Main {
 
         VistaPrincipal vista = null;
         //Gestion BBDD
-        /*ResultSet prueba;
+        ResultSet prueba;
 
         //Login BBDD
         ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
@@ -33,7 +34,7 @@ public class Main {
             System.out.println("Problema al recuperar les dades...");
         }
         //Desconexion BBDD
-        conn.disconnect();*/
+        conn.disconnect();
 
         try{
 

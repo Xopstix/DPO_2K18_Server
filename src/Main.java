@@ -1,5 +1,6 @@
 import utility.ConectorDB;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -9,8 +10,10 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
 
+
+        VistaPrincipal vista = null;
         //Gestion BBDD
-        ResultSet prueba;
+        /*ResultSet prueba;
 
         //Login BBDD
         ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
@@ -30,7 +33,20 @@ public class Main {
             System.out.println("Problema al recuperar les dades...");
         }
         //Desconexion BBDD
-        conn.disconnect();
+        conn.disconnect();*/
+
+        try{
+
+            vista = new VistaPrincipal();
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+        }
+
+        vista.setVisible(true);
+
+
 
     }
 }

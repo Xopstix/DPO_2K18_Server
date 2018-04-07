@@ -1,6 +1,6 @@
 import utility.ConectorDB;
 import views.VistaPrincipal;
-
+import network.Server;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,6 @@ import java.sql.SQLException;
  */
 public class Main {
     public static void main(String[] args) {
-
 
         VistaPrincipal vista = null;
         //Gestion BBDD
@@ -45,9 +44,12 @@ public class Main {
             e.printStackTrace();
         }
 
+        Server server = new Server();
+
         vista.setVisible(true);
 
-
+        server.run();
 
     }
 }
+// check

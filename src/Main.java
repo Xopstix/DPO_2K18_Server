@@ -1,6 +1,10 @@
+import config.Config;
+import config.ObjectFile;
+import network.Server;
 import utility.ConectorDB;
 import views.VistaPrincipal;
-import network.Server;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +13,12 @@ import java.sql.SQLException;
  * Created by xavipargela on 12/3/18.
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+
+        Config data;
+        ObjectFile objData = new ObjectFile();
+
+        data = objData.readData();
 
         VistaPrincipal vista = null;
         //Gestion BBDD

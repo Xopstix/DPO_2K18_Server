@@ -1,6 +1,10 @@
+import controller.ServerController;
 import utility.ConectorDB;
+import views.VistaEvolucio;
 import views.VistaPrincipal;
 import network.Server;
+import views.VistaTop;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +15,10 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
 
-        VistaPrincipal vista = null;
+
+        VistaPrincipal vistaPrincipal = null;
+        VistaEvolucio vistaEvolucio = null;
+        VistaTop vistaTop = null;
         //Gestion BBDD
         ResultSet prueba;
 
@@ -37,7 +44,9 @@ public class Main {
 
         try{
 
-            vista = new VistaPrincipal();
+            vistaPrincipal = new VistaPrincipal();
+            vistaEvolucio = new VistaEvolucio();
+            vistaTop = new VistaTop();
 
         }catch (IOException e){
 
@@ -46,7 +55,11 @@ public class Main {
 
         Server server = new Server();
 
-        vista.setVisible(true);
+        ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop);
+        vistaPrincipal.registrarControladorBoton(serverController);
+        vistaEvolucio.registrarControladorBoton(serverController);
+        vistaTop.registrarControladorBoton(serverController);
+        vistaPrincipal.setVisible(true);
 
         server.run();
 

@@ -1,5 +1,8 @@
 package views;
 
+import com.sun.security.ntlm.Server;
+import controller.ServerController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -20,7 +23,7 @@ public class VistaPrincipal extends JFrame {
     public VistaPrincipal() throws IOException{
 
         this.jpCentral = new JPanel();
-        this.jbEvolucion = new JButton("Mostrar evolución Charizard");
+        this.jbEvolucion = new JButton("Mostrar evolución usuarios");
         this.jbTop10 = new JButton("Top 10 anime betrayals");
         this.jp1 = new JPanel();
         this.jp2 = new JPanel();
@@ -28,7 +31,7 @@ public class VistaPrincipal extends JFrame {
         this.jp4 = new JPanel();
 
 
-        this.jpCentral.setBorder(BorderFactory.createTitledBorder("LSOrganizer SERVER)"));
+        this.jpCentral.setBorder(BorderFactory.createTitledBorder("LSOrganizer SERVER"));
         this.jpCentral.setLayout(new GridLayout(3, 2));
         this.jpCentral.add(jp1);
         this.jpCentral.add(jp2);
@@ -41,18 +44,19 @@ public class VistaPrincipal extends JFrame {
         this.setSize(400, 200);
         this.setResizable(true);
         this.setTitle("LS Organizer");
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
     }
 
-    /*public void registrarControladorBoton(ControladorBoton controladorBoton){
+    public void registrarControladorBoton(ServerController serverController){
 
         this.jbTop10.setActionCommand("BTN_TOP10");
         this.jbEvolucion.setActionCommand("BTN_EVOLUCION");
 
-        this.jbTop10.addActionListener(controladorBoton);
-        this.jbEvolucion.addActionListener(controladorBoton);
+        this.jbTop10.addActionListener(serverController);
+        this.jbEvolucion.addActionListener(serverController);
 
-    }*/
+    }
 }

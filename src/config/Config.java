@@ -16,7 +16,6 @@ public class Config {
         this.port = port;
     }
 
-
     public String getIp() {
         return ip;
     }

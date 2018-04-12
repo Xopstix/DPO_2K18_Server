@@ -30,7 +30,8 @@ public class Main {
         ResultSet prueba;
 
         //Login BBDD
-        ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
+        //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
+        ConectorDB conn = new ConectorDB(data.getDbUser(), data.getDbPassword(), data.getDbName(), data.getDbPort());
         conn.connect();
 
         prueba = conn.selectQuery("SELECT * FROM usuarios");

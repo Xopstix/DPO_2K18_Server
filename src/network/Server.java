@@ -1,5 +1,7 @@
 package network;
 
+import utility.ConectorDB;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,10 +15,12 @@ public class Server extends Thread{
 
     private ServerSocket sServer;
     private ArrayList<DedicatedServer> dServers;
+    private ConectorDB conn;
 
-    public Server(){
+    public Server(ConectorDB conn){
 
         this.dServers = new ArrayList<>();
+        this.conn = conn;
     }
 
     /**
@@ -27,7 +31,7 @@ public class Server extends Thread{
             sServer = new ServerSocket(12345);
             while (true) {
                 Socket sClient = sServer.accept();
-                DedicatedServer sd = new DedicatedServer(sClient, dServers);
+                DedicatedServer sd = new DedicatedServer(sClient, dServers, conn);
                 dServers.add(sd);
                 sd.start();
             }

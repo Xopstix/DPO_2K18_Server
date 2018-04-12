@@ -48,7 +48,7 @@ public class Main {
             System.out.println("Problema al recuperar les dades...");
         }
         //Desconexion BBDD
-        conn.disconnect();
+        //conn.disconnect();
 
         try{
 
@@ -61,7 +61,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        Server server = new Server();
+        Server server = new Server(conn);
 
         ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop);
         vistaPrincipal.registrarControladorBoton(serverController);

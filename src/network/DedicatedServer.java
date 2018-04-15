@@ -25,6 +25,7 @@ public class DedicatedServer extends Thread{
     //private DataInputStream dis;
     private ArrayList<DedicatedServer> clients;
     private ConectorDB conn;
+    private  boolean status;
 
     public DedicatedServer(Socket sClient, ArrayList<DedicatedServer> clients, ConectorDB conn) {
         this.sClient = sClient;
@@ -50,6 +51,7 @@ public class DedicatedServer extends Thread{
     public synchronized void run(){
 
         ProjectManager projectManager;
+        status = false;
 
         while (true) {
 
@@ -74,10 +76,13 @@ public class DedicatedServer extends Thread{
                             //Especificamente le ponenmos que campos queremos leer de la BBDD
                             if (prueba.getObject("Login").equals(projectManager.getUsuari().getNom())) {
                                 dos.writeUTF("INVALID");
-                            } else {
-                                //registrar datos BBDD
-                                dos.writeUTF("VALID");
+                                status = true;
                             }
+                        }
+                        if(!status){
+                            conn.insertQuery("INSERT INTO `usuarios` (`Login`, `Contraseña`, `Mail`) VALUES ('"+projectManager.getUsuari().getNom()+"', '"+projectManager.getUsuari().getPassword()+"', '"+projectManager.getUsuari().getCorreu()+"')");
+                            dos.writeUTF("REGISTERED");
+
                         }
                     } catch (SQLException e) {
                         // TODO Auto-generated catch block
@@ -114,6 +119,7 @@ public class DedicatedServer extends Thread{
                         // TODO Auto-generated catch block
                         System.out.println("Problema al recuperar les dades de la BBDD 2...");
                     }
+
                     //Desconexion BBDD
                     //conn.disconnect();
                 }

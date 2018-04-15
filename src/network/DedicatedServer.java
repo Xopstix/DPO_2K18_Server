@@ -64,6 +64,7 @@ public class DedicatedServer extends Thread{
                 if (!projectManager.getUsuari().getNom().equals("entrar")) {
                     //BBDD
                     ResultSet prueba;
+                    status = false;
 
                     //Login BBDD
                     //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
@@ -94,6 +95,7 @@ public class DedicatedServer extends Thread{
                 if (projectManager.getUsuari().getNom().equals("entrar")) {
                     //BBDD
                     ResultSet prueba;
+                    status = false;
 
                     //Login BBDD
                     //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
@@ -106,14 +108,15 @@ public class DedicatedServer extends Thread{
                             //Especificamente le ponenmos que campos queremos leer de la BBDD
                             if (prueba.getObject("Login").equals(projectManager.getUsuari().getCorreu()) || prueba.getObject("Mail").equals(projectManager.getUsuari().getCorreu())) {
                                 if(prueba.getObject("Contraseña").equals(projectManager.getUsuari().getPassword())){
-                                    dos.writeUTF("OK");
+                                    status = true;
                                 }
-                                else {
-                                    dos.writeUTF("NONOK");
-                                }
-                            } else {
-                                dos.writeUTF("NONOK");
                             }
+                        }
+                        if(status){
+                            dos.writeUTF("Logged");
+                        }
+                        else {
+                            dos.writeUTF("Pass or Login incorrect");
                         }
                     } catch (SQLException e) {
                         // TODO Auto-generated catch block

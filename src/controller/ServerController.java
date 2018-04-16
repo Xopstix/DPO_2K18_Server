@@ -50,6 +50,7 @@ public class ServerController implements ActionListener{
 
             //ordena los datos por año
             System.out.println("Ordenado por año en Evolución");
+            vistaEvolucio.actualizarVista(2);
 
         }
 
@@ -57,6 +58,7 @@ public class ServerController implements ActionListener{
 
             //ordena los datos por mes
             System.out.println("Ordenado por mes en Evolución");
+            vistaEvolucio.actualizarVista(1);
 
         }
 
@@ -64,6 +66,7 @@ public class ServerController implements ActionListener{
 
             //Ordena los datos por semana
             System.out.println("Ordenado por semana en Evolución");
+            vistaEvolucio.actualizarVista(0);
 
         }
 

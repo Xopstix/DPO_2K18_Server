@@ -16,8 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import static java.lang.Math.abs;
+
 /**
- * Created by ManuSahun & Jose-chan on 16/4/18.
+ * Created by ManuSahun  on 16/4/18.
  */
 
 public class DrawPanel extends JPanel {
@@ -34,8 +36,9 @@ public class DrawPanel extends JPanel {
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
         g.setColor(Color.WHITE);
-        g.fillRect(0,0,800,800);
+        g.fillRect(0,0,8000,8000);
 
+        // y axis
         for (int i = 0; i < numberYDivisions + 1; i++) {
             int x0 = padding + labelPadding;
             int x1 = pointWidth + padding + labelPadding;
@@ -45,13 +48,14 @@ public class DrawPanel extends JPanel {
             g2.setColor(Color.LIGHT_GRAY);
             g2.drawLine(padding + labelPadding + 1 + pointWidth, y0, getWidth() - padding, y1);
             g2.setColor(Color.BLACK);
-            String yLabel = ((int) ((0 + (10 - 0) * ((i * 1.0) / numberYDivisions)) * 100)) / 100.0 + "";
+            String yLabel = ((int) ((10 * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
             FontMetrics metrics = g2.getFontMetrics();
             int labelWidth = metrics.stringWidth(yLabel);
             g2.drawString(yLabel, x0 - labelWidth - 5, y0 + (metrics.getHeight() / 2) - 3);
             g2.drawLine(x0, y0, x1, y1);
         }
 
+        // x axis
         for (int i = 0; i < numbDays; i++) {
             int x0 = i * (getWidth() - padding * 2 - labelPadding) / (numbDays - 1) + padding + labelPadding;
             int x1 = x0;
@@ -67,10 +71,28 @@ public class DrawPanel extends JPanel {
             g2.drawString(xLabel, x0 - labelWidth / 2, y0 + metrics.getHeight() + 3);
             g2.drawLine(x0, y0, x1, y1);
         }
+        int x0 = padding + labelPadding;
+        int y0 = getHeight() - padding - labelPadding;
+        int incrX = abs(x0-((getWidth() - padding * 2 - labelPadding) / (numbDays - 1) + padding + labelPadding));
+        int incrY = abs(y0 - (getHeight() - ((1 * (getHeight() - padding * 2 - labelPadding)) / numberYDivisions + padding + labelPadding)));
+
+        // testeo grafica
+
+        g2.setColor(Color.BLUE);
+        g2.drawLine(x0,y0,x0 + incrX,y0 - 3*incrY);
+
+
+        /*System.out.println("x0:  " + x0);
+        System.out.println("y0:  " + y0);
+        System.out.println("incrX:  " + incrX);
+        System.out.println("incrY:  " + incrY);*/
+
+
     }
     public void setXY(int x, int y){
         this.numberYDivisions = y;
         this.numbDays = x;
     }
+
 
 }

@@ -34,14 +34,14 @@ public class Main {
         ConectorDB conn = new ConectorDB(data.getDbUser(), data.getDbPassword(), data.getDbName(), data.getDbPort());
         conn.connect();
 
-        prueba = conn.selectQuery("SELECT * FROM usuarios");
+        prueba = conn.selectQuery("SELECT * FROM Usuario");
 
         try {
             //Recorremos toda la tabla de usuarios de la BBDD.
             while (prueba.next())
             {
                 //Especificamente le ponenmos que campos queremos leer de la BBDD
-                System.out.println (prueba.getObject("Login") + " " + prueba.getObject("Contraseña"));
+                System.out.println (prueba.getObject("username") + " " + prueba.getObject("contrasena"));
             }
         } catch (SQLException e) {
             // TODO Auto-generated catch block

@@ -28,6 +28,7 @@ public class DrawPanel extends JPanel {
     private int padding = 25;
     private int labelPadding = 25;
     private int pointWidth = 4;
+    private int proyectos[] = {0,4,1,0,3,5,2};
 
     public DrawPanel (){
 
@@ -71,16 +72,23 @@ public class DrawPanel extends JPanel {
             g2.drawString(xLabel, x0 - labelWidth / 2, y0 + metrics.getHeight() + 3);
             g2.drawLine(x0, y0, x1, y1);
         }
-        int x0 = padding + labelPadding;
-        int y0 = getHeight() - padding - labelPadding;
-        int incrX = abs(x0-((getWidth() - padding * 2 - labelPadding) / (numbDays - 1) + padding + labelPadding));
-        int incrY = abs(y0 - (getHeight() - ((1 * (getHeight() - padding * 2 - labelPadding)) / numberYDivisions + padding + labelPadding)));
 
-        // testeo grafica
 
-        g2.setColor(Color.BLUE);
-        g2.drawLine(x0,y0,x0 + incrX,y0 - 3*incrY);
+        for (int i = 0; i<(proyectos.length-1);i++){
+            int x0 = padding + labelPadding;
+            int y0 = getHeight() - padding - labelPadding;
+            int incrX = abs(x0-((getWidth() - padding * 2 - labelPadding) / (numbDays - 1) + padding + labelPadding));
+            int incrY = abs(y0 - (getHeight() - ((1 * (getHeight() - padding * 2 - labelPadding)) / numberYDivisions + padding + labelPadding)));
 
+            System.out.println("x0:  " + x0);
+            System.out.println("y0:  " + y0);
+            System.out.println("incrX:  " + incrX);
+            System.out.println("incrY:  " + incrY);
+
+            g2.setColor(Color.BLUE);
+            g2.drawLine(x0 + incrX*i,y0 - (incrY*proyectos[i]),x0 + incrX*(i+1),y0 - incrY*proyectos[i+1]);
+
+        }
 
         /*System.out.println("x0:  " + x0);
         System.out.println("y0:  " + y0);

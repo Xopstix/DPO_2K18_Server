@@ -69,19 +69,19 @@ public class DedicatedServer extends Thread{
                     //Login BBDD
                     //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
                     conn.connect();
-                    prueba = conn.selectQuery("SELECT * FROM usuarios");
+                    prueba = conn.selectQuery("SELECT * FROM Usuario");
 
                     try {
                         //Recorremos toda la tabla de usuarios de la BBDD.
                         while (prueba.next()) {
                             //Especificamente le ponenmos que campos queremos leer de la BBDD
-                            if (prueba.getObject("Login").equals(projectManager.getUsuari().getNom())) {
+                            if (prueba.getObject("username").equals(projectManager.getUsuari().getNom())) {
                                 dos.writeUTF("INVALID");
                                 status = true;
                             }
                         }
                         if(!status){
-                            conn.insertQuery("INSERT INTO `usuarios` (`Login`, `Contraseña`, `Mail`) VALUES ('"+projectManager.getUsuari().getNom()+"', '"+projectManager.getUsuari().getPassword()+"', '"+projectManager.getUsuari().getCorreu()+"')");
+                            conn.insertQuery("INSERT INTO `Usuario` (`username`, `contrasena`, `email`) VALUES ('"+projectManager.getUsuari().getNom()+"', '"+projectManager.getUsuari().getPassword()+"', '"+projectManager.getUsuari().getCorreu()+"')");
                             dos.writeUTF("REGISTERED");
 
                         }
@@ -100,14 +100,14 @@ public class DedicatedServer extends Thread{
                     //Login BBDD
                     //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
                     conn.connect();
-                    prueba = conn.selectQuery("SELECT * FROM usuarios");
+                    prueba = conn.selectQuery("SELECT * FROM Usuario");
 
                     try {
                         //Recorremos toda la tabla de usuarios de la BBDD.
                         while (prueba.next()) {
                             //Especificamente le ponenmos que campos queremos leer de la BBDD
-                            if (prueba.getObject("Login").equals(projectManager.getUsuari().getCorreu()) || prueba.getObject("Mail").equals(projectManager.getUsuari().getCorreu())) {
-                                if(prueba.getObject("Contraseña").equals(projectManager.getUsuari().getPassword())){
+                            if (prueba.getObject("username").equals(projectManager.getUsuari().getCorreu()) || prueba.getObject("email").equals(projectManager.getUsuari().getCorreu())) {
+                                if(prueba.getObject("contrasena").equals(projectManager.getUsuari().getPassword())){
                                     status = true;
                                 }
                             }

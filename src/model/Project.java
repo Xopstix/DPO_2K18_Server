@@ -7,13 +7,16 @@ import java.io.Serializable;
  * Tablero del proyecto
  * Created by Marc on 13/3/18.
  */
-public class Projecte implements Serializable{
+public class Project implements Serializable{
 
     private String name;
     private Usuari[] membres;
     private Columna[] columnes;
-    private Image background;
+    private String background;
     private Etiqueta[] etiquetes;
+    private int day;
+    private int month;
+    private  int year;
 
     public String getName() {
         return name;
@@ -39,11 +42,11 @@ public class Projecte implements Serializable{
         this.columnes = columnes;
     }
 
-    public Image getBackground() {
+    public String getBackground() {
         return background;
     }
 
-    public void setBackground(Image background) {
+    public void setBackground(String background) {
         this.background = background;
     }
 

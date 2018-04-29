@@ -1,12 +1,10 @@
 package network;
 
 import model.ProjectManager;
+import model.Project;
 import utility.ConectorDB;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +20,7 @@ public class DedicatedServer extends Thread{
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private DataOutputStream dos;
+    private DataInputStream dis;
     //private DataInputStream dis;
     private ArrayList<DedicatedServer> clients;
     private ConectorDB conn;
@@ -33,12 +32,11 @@ public class DedicatedServer extends Thread{
         this.conn = conn;
 
         try {
-            /*dis = new DataInputStream(sClient.getInputStream());
-            dos = new DataOutputStream(sClient.getOutputStream());*/
 
             ois = new ObjectInputStream(sClient.getInputStream());
             oos = new ObjectOutputStream(sClient.getOutputStream());
             dos = new DataOutputStream(sClient.getOutputStream());
+            dis = new DataInputStream(sClient.getInputStream());
 
         } catch (IOException e) {
             System.out.println("Socket problem!");
@@ -51,91 +49,98 @@ public class DedicatedServer extends Thread{
     public synchronized void run(){
 
         ProjectManager projectManager;
+        Project projecte;
         status = false;
 
         while (true) {
 
             try {
-                projectManager = (ProjectManager) ois.readObject();
-                System.out.println(projectManager.getUsuari().getNom());
-                System.out.println(projectManager.getUsuari().getPassword());
-                System.out.println(projectManager.getUsuari().getCorreu());
 
-                if (!projectManager.getUsuari().getNom().equals("entrar")) {
-                    //BBDD
-                    ResultSet prueba;
-                    status = false;
+                if (dis.readUTF().equals("1")) {
 
-                    //Login BBDD
-                    //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
-                    conn.connect();
-                    prueba = conn.selectQuery("SELECT * FROM Usuario");
+                    projectManager = (ProjectManager) ois.readObject();
+                    System.out.println(projectManager.getUsuari().getNom());
+                    System.out.println(projectManager.getUsuari().getPassword());
+                    System.out.println(projectManager.getUsuari().getCorreu());
 
-                    try {
-                        //Recorremos toda la tabla de usuarios de la BBDD.
-                        while (prueba.next()) {
-                            //Especificamente le ponenmos que campos queremos leer de la BBDD
-                            if (prueba.getObject("username").equals(projectManager.getUsuari().getNom())) {
-                                dos.writeUTF("INVALID");
-                                status = true;
-                            }
-                        }
-                        if(!status){
-                            conn.insertQuery("INSERT INTO `Usuario` (`username`, `contrasena`, `email`) VALUES ('"+projectManager.getUsuari().getNom()+"', '"+projectManager.getUsuari().getPassword()+"', '"+projectManager.getUsuari().getCorreu()+"')");
-                            dos.writeUTF("REGISTERED");
+                    if (!projectManager.getUsuari().getNom().equals("entrar")) {
+                        //BBDD
+                        ResultSet prueba;
+                        status = false;
 
-                        }
-                    } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        System.out.println("Problema al recuperar les dades de la BBDD 1...");
-                    }
-                    //Desconexion BBDD
-                    //conn.disconnect();
-                }
-                if (projectManager.getUsuari().getNom().equals("entrar")) {
-                    //BBDD
-                    ResultSet prueba;
-                    status = false;
+                        //Login BBDD
+                        //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
+                        conn.connect();
+                        prueba = conn.selectQuery("SELECT * FROM Usuario");
 
-                    //Login BBDD
-                    //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
-                    conn.connect();
-                    prueba = conn.selectQuery("SELECT * FROM Usuario");
-
-                    try {
-                        //Recorremos toda la tabla de usuarios de la BBDD.
-                        while (prueba.next()) {
-                            //Especificamente le ponenmos que campos queremos leer de la BBDD
-                            if (prueba.getObject("username").equals(projectManager.getUsuari().getCorreu()) || prueba.getObject("email").equals(projectManager.getUsuari().getCorreu())) {
-                                if(prueba.getObject("contrasena").equals(projectManager.getUsuari().getPassword())){
+                        try {
+                            //Recorremos toda la tabla de usuarios de la BBDD.
+                            while (prueba.next()) {
+                                //Especificamente le ponenmos que campos queremos leer de la BBDD
+                                if (prueba.getObject("username").equals(projectManager.getUsuari().getNom())) {
+                                    dos.writeUTF("INVALID");
                                     status = true;
                                 }
                             }
+                            if (!status) {
+                                conn.insertQuery("INSERT INTO `Usuario` (`username`, `contrasena`, `email`) VALUES ('" + projectManager.getUsuari().getNom() + "', '" + projectManager.getUsuari().getPassword() + "', '" + projectManager.getUsuari().getCorreu() + "')");
+                                dos.writeUTF("REGISTERED");
+
+                            }
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            System.out.println("Problema al recuperar les dades de la BBDD 1...");
                         }
-                        if(status){
-                            dos.writeUTF("Logged");
-                        }
-                        else {
-                            dos.writeUTF("Pass or Login incorrect");
-                        }
-                    } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        System.out.println("Problema al recuperar les dades de la BBDD 2...");
+                        //Desconexion BBDD
+                        //conn.disconnect();
                     }
+                    if (projectManager.getUsuari().getNom().equals("entrar")) {
+                        //BBDD
+                        ResultSet prueba;
+                        status = false;
 
-                    //Desconexion BBDD
-                    //conn.disconnect();
+                        //Login BBDD
+                        //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
+                        conn.connect();
+                        prueba = conn.selectQuery("SELECT * FROM Usuario");
+
+                        try {
+                            //Recorremos toda la tabla de usuarios de la BBDD.
+                            while (prueba.next()) {
+                                //Especificamente le ponenmos que campos queremos leer de la BBDD
+                                if (prueba.getObject("username").equals(projectManager.getUsuari().getCorreu()) || prueba.getObject("email").equals(projectManager.getUsuari().getCorreu())) {
+                                    if (prueba.getObject("contrasena").equals(projectManager.getUsuari().getPassword())) {
+                                        status = true;
+                                    }
+                                }
+                            }
+                            if (status) {
+                                dos.writeUTF("Logged");
+                            } else {
+                                dos.writeUTF("Pass or Login incorrect");
+                            }
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            System.out.println("Problema al recuperar les dades de la BBDD 2...");
+                        }
+
+                    }
                 }
-
-            } catch (IOException | ClassNotFoundException e) {
+                if (dis.readUTF().equals("2")){
+                    System.out.println("hola2");
+                    projecte = (Project) ois.readObject();
+                    System.out.println("hola1");
+                    System.out.println(projecte.getName());
+                }
+            } catch(IOException | ClassNotFoundException e){
                 clients.remove(this);
-            } finally {
-                /*try {
-                    ois.close();
-                } catch (IOException e) {}
-                try {
-                    sClient.close();
-                } catch (IOException e) {}*/
+            } finally{
+                    /*try {
+                        ois.close();
+                    } catch (IOException e) {}
+                    try {
+                        sClient.close();
+                    } catch (IOException e) {}*/
             }
         }
 

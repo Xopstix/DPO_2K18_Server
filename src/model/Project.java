@@ -1,7 +1,11 @@
 package model;
 
+import sun.util.calendar.BaseCalendar;
+
 import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Tablero del proyecto
@@ -10,13 +14,14 @@ import java.io.Serializable;
 public class Project implements Serializable{
 
     private String name;
-    private Usuari[] membres;
-    private Columna[] columnes;
+    private ArrayList<Usuari> membres;
+    private ArrayList<Columna> columnes;
     private String background;
-    private Etiqueta[] etiquetes;
+    private ArrayList<Etiqueta> etiquetes;
     private int day;
     private int month;
-    private  int year;
+    private int year;
+
 
     public String getName() {
         return name;
@@ -26,19 +31,19 @@ public class Project implements Serializable{
         this.name = name;
     }
 
-    public Usuari[] getMembres() {
+    public ArrayList<Usuari> getMembres() {
         return membres;
     }
 
-    public void setMembres(Usuari[] membres) {
+    public void setMembres(ArrayList<Usuari> membres) {
         this.membres = membres;
     }
 
-    public Columna[] getColumnes() {
+    public ArrayList<Columna> getColumnes() {
         return columnes;
     }
 
-    public void setColumnes(Columna[] columnes) {
+    public void setColumnes(ArrayList<Columna> columnes) {
         this.columnes = columnes;
     }
 
@@ -50,11 +55,20 @@ public class Project implements Serializable{
         this.background = background;
     }
 
-    public Etiqueta[] getEtiquetes() {
+    public ArrayList<Etiqueta> getEtiquetes() {
         return etiquetes;
     }
 
-    public void setEtiquetes(Etiqueta[] etiquetes) {
+    public void setEtiquetes(ArrayList<Etiqueta> etiquetes) {
         this.etiquetes = etiquetes;
     }
+
+    public void setDate (){
+        java.util.Date fecha = new Date();
+
+        day = fecha.getDay();
+        month = fecha.getMonth();
+        year = fecha.getYear();
+    }
+
 }

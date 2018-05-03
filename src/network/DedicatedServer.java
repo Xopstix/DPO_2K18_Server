@@ -21,10 +21,11 @@ public class DedicatedServer extends Thread{
     private ObjectOutputStream oos;
     private DataOutputStream dos;
     private DataInputStream dis;
-    //private DataInputStream dis;
     private ArrayList<DedicatedServer> clients;
     private ConectorDB conn;
     private  boolean status;
+    private String mode;
+    private Object newObject;
 
     public DedicatedServer(Socket sClient, ArrayList<DedicatedServer> clients, ConectorDB conn) {
         this.sClient = sClient;
@@ -48,17 +49,21 @@ public class DedicatedServer extends Thread{
      */
     public synchronized void run(){
 
-        ProjectManager projectManager;
-        Project projecte;
+        ProjectManager projectManager = new ProjectManager() ;
         status = false;
 
         while (true) {
 
             try {
 
-                if (dis.readUTF().equals("1")) {
+                newObject = ois.readObject();
+                if(newObject instanceof ProjectManager) {
+                    projectManager = (ProjectManager) newObject;
+                }
 
-                    projectManager = (ProjectManager) ois.readObject();
+
+                if (projectManager.getMode() == 1) {
+
                     System.out.println(projectManager.getUsuari().getNom());
                     System.out.println(projectManager.getUsuari().getPassword());
                     System.out.println(projectManager.getUsuari().getCorreu());
@@ -126,21 +131,13 @@ public class DedicatedServer extends Thread{
 
                     }
                 }
-                if (dis.readUTF().equals("2")){
-                    System.out.println("hola2");
-                    projecte = (Project) ois.readObject();
-                    System.out.println("hola1");
-                    System.out.println(projecte.getName());
+
+                if (projectManager.getMode() == 2){
+                    System.out.println(projectManager.getProject().getName());
                 }
+
             } catch(IOException | ClassNotFoundException e){
                 clients.remove(this);
-            } finally{
-                    /*try {
-                        ois.close();
-                    } catch (IOException e) {}
-                    try {
-                        sClient.close();
-                    } catch (IOException e) {}*/
             }
         }
 

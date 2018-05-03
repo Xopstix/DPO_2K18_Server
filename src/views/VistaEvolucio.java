@@ -2,8 +2,12 @@ package views;
 
 import controller.ServerController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -26,23 +30,77 @@ public class VistaEvolucio extends JFrame{
 
     public VistaEvolucio() throws IOException{
 
-        this.jpCentral = new JPanel();
-        this.jpTop = new JPanel();
-        this.jpBottom = new DrawPanel();
+        this.jpCentral = new JPanel(new BorderLayout()){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                            0, 0, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        this.jpTop = new JPanel(new FlowLayout()){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                            0, 0, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        this.jpBottom = new DrawPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                            0, 0, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };;
         this.jpBottom.setXY(10,10);
-        this.jpX = new JPanel();
-        this.jpY = new JPanel();
-        this.jbSetmana = new JButton("Setmana");
-        this.jbMes = new JButton("Mes");
-        this.jbAny = new JButton("Any");
-        this.jlx = new JLabel("Divison Temporal");
+        this.jpX = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                            0, 0, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };;
+        this.jpY = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                            0, 0, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        this.jbSetmana = new JButton("Week");
+        this.jbMes = new JButton("Month");
+        this.jbAny = new JButton("Year");
+        this.jlx = new JLabel("Time");
         this.jlx.setHorizontalAlignment(SwingConstants.CENTER);
-        this.jly = new JLabel("Num. Projectes");
+        this.jly = new JLabel("Number of projects");
         this.jly.setVerticalAlignment(SwingConstants.CENTER);
 
-        this.jpCentral.setBorder(BorderFactory.createTitledBorder("Evolució usuaris"));
-        this.jpCentral.setLayout(new BorderLayout());
-        this.jpTop.setLayout(new FlowLayout());
+        /*this.jpCentral.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.black, 2), "Evolution", TitledBorder.LEFT, TitledBorder.TOP,
+                new Font("Arial", Font.PLAIN, 16), Color.black));*/
         this.jpTop.add(jbSetmana);
         this.jpTop.add(jbMes);
         this.jpTop.add(jbAny);
@@ -57,7 +115,7 @@ public class VistaEvolucio extends JFrame{
 
         this.setSize(800,400);
         this.setResizable(true);
-        this.setTitle("Evolució usuaris");
+        this.setTitle("User Evolution");
         this.setLocationRelativeTo(null);
 
     }
@@ -68,7 +126,7 @@ public class VistaEvolucio extends JFrame{
             y = 10;
             jpBottom.setXY(x,y);
             jpBottom.updateUI();
-            jlx.setText("Semanas");
+            jlx.setText("Weeks");
 
         }
         if(id == 1){
@@ -76,14 +134,14 @@ public class VistaEvolucio extends JFrame{
             y = 10;
             jpBottom.setXY(x,y);
             jpBottom.updateUI();
-            jlx.setText("Meses");
+            jlx.setText("Months");
         }
         if(id == 2){
             x = ~~(365/10) + 1;
             y = 10;
             jpBottom.setXY(x,y);
             jpBottom.updateUI();
-            jlx.setText("Años");
+            jlx.setText("Years");
         }
     }
 

@@ -2,8 +2,12 @@ package views;
 
 import controller.ServerController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -12,47 +16,45 @@ import java.io.IOException;
 public class VistaTop extends JFrame{
 
     private JPanel jpCentral;
-    private JPanel jpTop;
-    private JPanel jpBottom;
-    private JButton jbSetmana;
+    //private JPanel jpTop;
+    //private JPanel jpBottom;
+    /*private JButton jbSetmana;
     private JButton jbMes;
-    private JButton jbAny;
+    private JButton jbAny;*/
 
     public VistaTop() throws IOException{
 
-        this.jpCentral = new JPanel();
-        this.jpTop = new JPanel();
-        this.jpBottom = new JPanel();
-        this.jbSetmana = new JButton("Setmana");
-        this.jbMes = new JButton("Mes");
-        this.jbAny = new JButton("Any");
+        //headers for the table
+        String[] columns = new String[] {
+                "User", "Tasks Uncompleted", "Total Tasks"
+        };
 
-        this.jpCentral.setBorder(BorderFactory.createTitledBorder("Top 10 usuaris"));
-        this.jpCentral.setLayout(new GridLayout(2, 1));
-        this.jpTop.add(jbSetmana);
-        this.jpTop.add(jbMes);
-        this.jpTop.add(jbAny);
-        this.jpCentral.add(jpTop);
-        this.jpCentral.add(jpBottom);
-        this.add(jpCentral);
+        //actual data for the table in a 2d array
+        Object[][] data = new Object[][] {
+                {"marcL", 1, 12},
+                {"manusahun", 3, 25},
+                {"albertR", 2, 60},
+                {"xaviA", 0, 8},
+                {"alonsez", 4, 67},
+        };
+        //create table with data
+        JTable table = new JTable(data, columns);
 
+        table.setEnabled(false); //para que no se pueda modificar
 
-        this.setSize(800, 800);
-        this.setResizable(true);
-        this.setTitle("Top 10 usuaris");
+        //add the table to the frame
+        this.add(new JScrollPane(table));
+
+        this.setSize(400, 100);
+        this.setTitle("Top 10 Users");
         this.setLocationRelativeTo(null);
-
+        this.setVisible(false);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void registrarControladorBoton(ServerController serverController){
 
-        this.jbAny.setActionCommand("BTN_ANY2");
-        this.jbMes.setActionCommand("BTN_MES2");
-        this.jbSetmana.setActionCommand("BTN_SETMANA2");
-
-        this.jbAny.addActionListener(serverController);
-        this.jbMes.addActionListener(serverController);
-        this.jbSetmana.addActionListener(serverController);
+        //Vacía por el momento
 
     }
 }

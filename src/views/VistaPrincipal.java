@@ -3,8 +3,12 @@ package views;
 import com.sun.security.ntlm.Server;
 import controller.ServerController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -22,28 +26,30 @@ public class VistaPrincipal extends JFrame {
 
     public VistaPrincipal() throws IOException{
 
-        this.jpCentral = new JPanel();
-        this.jbEvolucion = new JButton("Mostrar evolución usuarios");
-        this.jbTop10 = new JButton("Top 10 anime betrayals");
-        this.jp1 = new JPanel();
-        this.jp2 = new JPanel();
-        this.jp3 = new JPanel();
-        this.jp4 = new JPanel();
+        this.jpCentral = new JPanel(new FlowLayout()){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("images/fondo.jpg")),
+                            -100, -200, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        this.jbEvolucion = new JButton("User Evolution");
+        this.jbTop10 = new JButton("Top 10 Users");
 
-
-        this.jpCentral.setBorder(BorderFactory.createTitledBorder("LSOrganizer SERVER"));
-        this.jpCentral.setLayout(new GridLayout(3, 2));
-        this.jpCentral.add(jp1);
-        this.jpCentral.add(jp2);
+        this.jpCentral.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.white, 2), "Menu", TitledBorder.LEFT, TitledBorder.TOP,
+                new Font("Arial", Font.PLAIN, 16), Color.white));
         this.jpCentral.add(jbEvolucion);
         this.jpCentral.add(jbTop10);
-        this.jpCentral.add(jp3);
-        this.jpCentral.add(jp4);
         this.add(jpCentral);
 
-        this.setSize(400, 200);
-        this.setResizable(true);
-        this.setTitle("LS Organizer");
+        this.setSize(300, 100);
+        this.setResizable(false);
+        this.setTitle("LS Organizer Server");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

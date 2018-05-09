@@ -141,11 +141,15 @@ public class DedicatedServer extends Thread{
                     //Login BBDD
                     //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
                     conn.connect();
-
+                    System.out.println(projectManager.getUsuari().getNom() + projectManager.getProject().getName() + " año: " + projectManager.getProject().getYear() + " mes: " + projectManager.getProject().getMonth() + " dia: " + projectManager.getProject().getDay());
                     try {
 
-                        conn.insertQuery("INSERT INTO `Proyecto` (`username`, `nombre`, `year_proyecto`, `mes_proyecto`, `dia_proyecto) VALUES ('" + projectManager.getUsuari().getNom() + "', '" + projectManager.getProject().getName() + "', '" + projectManager.getProject().getYear() + "', '" + projectManager.getProject().getMonth() + "', '" + projectManager.getProject().getDay() + "')");
+                        String query = "INSERT INTO Proyecto(username, nombre, year_proyecto, mes_proyecto, dia_proyecto) VALUES ('" + "manusahun" + "', '" + projectManager.getProject().getName() + "', '" + projectManager.getProject().getYear() + "', '" + projectManager.getProject().getMonth() + "', '" + projectManager.getProject().getDay() + "')";
+                        System.out.println(query);
+                        conn.insertQuery(query);
+                        System.out.println("hola 1");
                         prueba = conn.selectQuery("SELECT id_proyecto FROM Proyecto ORDER BY id_proyecto DESC LIMIT 1");
+                        prueba.next();
                         int id_projecte = prueba.getInt("id_proyecto");
                         for(int i = 0; i < projectManager.getProject().getMembres().size() ; i++) {
                             conn.insertQuery("INSERT INTO `UsuarioProyecto`(`username`,`id_proyecto`) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
@@ -153,9 +157,11 @@ public class DedicatedServer extends Thread{
                         dos.writeUTF("REGISTERED");
 
                     } catch (SQLException e) {
+                        e.printStackTrace();
                         // TODO Auto-generated catch block
                         System.out.println("Problema al recuperar les dades de la BBDD 2...");
                     }
+
                 }
 
             } catch(IOException | ClassNotFoundException e){

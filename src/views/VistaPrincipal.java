@@ -24,6 +24,7 @@ public class VistaPrincipal extends JFrame {
     private JPanel jp3;
     private JPanel jp4;
 
+
     public VistaPrincipal() throws IOException{
 
         this.jpCentral = new JPanel(new FlowLayout()){

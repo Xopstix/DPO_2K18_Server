@@ -5,6 +5,7 @@ import sun.util.calendar.BaseCalendar;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -66,9 +67,9 @@ public class Project implements Serializable{
     public void setDate (){
         java.util.Date fecha = new Date();
 
-        day = fecha.getDay();
-        month = fecha.getMonth();
-        year = fecha.getYear();
+        day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        month = (Calendar.getInstance().get(Calendar.MONTH)) + 1;
+        year = Calendar.getInstance().get(Calendar.YEAR);
     }
 
     public int getDay() {

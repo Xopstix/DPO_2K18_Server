@@ -12,7 +12,8 @@ public class ProjectManager implements Serializable{
     private Usuari usuari;  //Usuario que almacena los datos de registro de inicio de sesión
     private Project project;
     private int mode;
-    private ArrayList<Project> projects;
+    private ArrayList<Project> sharedProjects;
+    private ArrayList<Project> yourProjects;
     /**
      * Constructor del modelo
      */
@@ -21,7 +22,8 @@ public class ProjectManager implements Serializable{
 
         usuari = new Usuari();
         project = new Project();
-        projects = new ArrayList<>();
+        sharedProjects = new ArrayList<>();
+        yourProjects = new ArrayList<>();
 
     }
 
@@ -49,11 +51,20 @@ public class ProjectManager implements Serializable{
         this.mode = mode;
     }
 
-    public ArrayList<Project> getProjects() {
-        return projects;
+
+    public ArrayList<Project> getSharedProjects() {
+        return sharedProjects;
     }
 
-    public void setProjects(ArrayList<Project> projects) {
-        this.projects = projects;
+    public void setSharedProjects(ArrayList<Project> sharedProjects) {
+        this.sharedProjects = sharedProjects;
+    }
+
+    public ArrayList<Project> getYourProjects() {
+        return yourProjects;
+    }
+
+    public void setYourProjects(ArrayList<Project> yourProjects) {
+        this.yourProjects = yourProjects;
     }
 }

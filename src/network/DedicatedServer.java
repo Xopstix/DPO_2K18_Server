@@ -50,6 +50,7 @@ public class DedicatedServer extends Thread{
     public synchronized void run(){
 
         ProjectManager projectManager = new ProjectManager() ;
+        Project proyecto = new Project();
         status = false;
 
         while (true) {
@@ -83,12 +84,14 @@ public class DedicatedServer extends Thread{
                             while (prueba.next()) {
                                 //Especificamente le ponenmos que campos queremos leer de la BBDD
                                 if (prueba.getObject("username").equals(projectManager.getUsuari().getNom())) {
+                                    oos.writeObject(projectManager);
                                     dos.writeUTF("INVALID");
                                     status = true;
                                 }
                             }
                             if (!status) {
                                 conn.insertQuery("INSERT INTO `Usuario` (`username`, `contrasena`, `email`) VALUES ('" + projectManager.getUsuari().getNom() + "', '" + projectManager.getUsuari().getPassword() + "', '" + projectManager.getUsuari().getCorreu() + "')");
+                                oos.writeObject(projectManager);
                                 dos.writeUTF("REGISTERED");
 
                             }
@@ -120,8 +123,23 @@ public class DedicatedServer extends Thread{
                                 }
                             }
                             if (status) {
+                                prueba = conn.selectQuery("SELECT * FROM Proyecto AS Po, Usuario AS Us WHERE Po.username = '" + projectManager.getUsuari().getCorreu() + "' AND Po.username = Us.username");
+                                //projectManager.getProject().setName(prueba.getObject("nombre"));
+                                while(prueba.next()){
+
+                                    proyecto.setName(prueba.getString("nombre"));
+                                    proyecto.setUsername(prueba.getString("username"));
+                                    projectManager.getProjects().add(proyecto);
+
+                                }
+                                oos.writeObject(projectManager);
                                 dos.writeUTF("Logged");
+                                for (int i = 0; i < projectManager.getProjects().size(); i++){
+
+                                    System.out.println(projectManager.getProjects().get(i).getName());
+                                }
                             } else {
+                                oos.writeObject(projectManager);
                                 dos.writeUTF("Pass or Login incorrect");
                             }
                         } catch (SQLException e) {
@@ -154,6 +172,7 @@ public class DedicatedServer extends Thread{
                         for(int i = 0; i < projectManager.getProject().getMembres().size() ; i++) {
                             conn.insertQuery("INSERT INTO `UsuarioProyecto`(`username`,`id_proyecto`) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
                         }
+                        oos.writeObject(projectManager);
                         dos.writeUTF("REGISTERED");
 
                     } catch (SQLException e) {

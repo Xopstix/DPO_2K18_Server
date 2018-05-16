@@ -1,5 +1,6 @@
 package network;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import model.ProjectManager;
 import model.Project;
 import utility.ConectorDB;
@@ -125,19 +126,30 @@ public class DedicatedServer extends Thread{
                             if (status) {
                                 prueba = conn.selectQuery("SELECT * FROM Proyecto AS Po, Usuario AS Us WHERE Po.username = '" + projectManager.getUsuari().getCorreu() + "' AND Po.username = Us.username");
                                 //projectManager.getProject().setName(prueba.getObject("nombre"));
+                                int j = 0;
                                 while(prueba.next()){
+
 
                                     proyecto.setName(prueba.getString("nombre"));
                                     proyecto.setUsername(prueba.getString("username"));
-                                    projectManager.getProjects().add(proyecto);
+                                    proyecto.setDay(prueba.getInt("dia_proyecto"));
+                                    System.out.println(proyecto.getName() + " " + proyecto.getUsername() + " "+ proyecto.getDay());
+                                    projectManager.getYourProjects().add(proyecto);
+                                    System.out.println(projectManager.getYourProjects().indexOf(proyecto));
+                                    System.out.println(j);
+                                    System.out.println(projectManager.getYourProjects().get(j).getName());
 
+
+                                    j++;
                                 }
                                 oos.writeObject(projectManager);
                                 dos.writeUTF("Logged");
-                                for (int i = 0; i < projectManager.getProjects().size(); i++){
+                                for (int i = 0; i < projectManager.getYourProjects().size(); i++){
 
-                                    System.out.println(projectManager.getProjects().get(i).getName());
+                                    System.out.println(projectManager.getYourProjects().get(i).getName());
                                 }
+
+
                             } else {
                                 oos.writeObject(projectManager);
                                 dos.writeUTF("Pass or Login incorrect");
@@ -162,7 +174,7 @@ public class DedicatedServer extends Thread{
                     System.out.println(projectManager.getUsuari().getNom() + projectManager.getProject().getName() + " año: " + projectManager.getProject().getYear() + " mes: " + projectManager.getProject().getMonth() + " dia: " + projectManager.getProject().getDay());
                     try {
 
-                        String query = "INSERT INTO Proyecto(username, nombre, year_proyecto, mes_proyecto, dia_proyecto) VALUES ('" + "manusahun" + "', '" + projectManager.getProject().getName() + "', '" + projectManager.getProject().getYear() + "', '" + projectManager.getProject().getMonth() + "', '" + projectManager.getProject().getDay() + "')";
+                        String query = "INSERT INTO Proyecto(username, nombre, year_proyecto, mes_proyecto, dia_proyecto) VALUES ('" + projectManager.getUsuari().getCorreu() + "', '" + projectManager.getProject().getName() + "', '" + projectManager.getProject().getYear() + "', '" + projectManager.getProject().getMonth() + "', '" + projectManager.getProject().getDay() + "')";
                         System.out.println(query);
                         conn.insertQuery(query);
                         System.out.println("hola 1");
@@ -173,7 +185,7 @@ public class DedicatedServer extends Thread{
                             conn.insertQuery("INSERT INTO `UsuarioProyecto`(`username`,`id_proyecto`) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
                         }
                         oos.writeObject(projectManager);
-                        dos.writeUTF("REGISTERED");
+                        dos.writeUTF("VALORES RECOGIDOS");
 
                     } catch (SQLException e) {
                         e.printStackTrace();

@@ -125,29 +125,60 @@ public class DedicatedServer extends Thread{
                             if (status) {
                                 prueba = conn.selectQuery("SELECT * FROM Proyecto AS Po, Usuario AS Us WHERE Po.username = '" + projectManager.getUsuari().getCorreu() + "' AND Po.username = Us.username");
                                 //projectManager.getProject().setName(prueba.getObject("nombre"));
-                                int j = 0;
+                                //int j = 0;
                                 while(prueba.next()){
 
                                     Project proyecto = new Project();
                                     proyecto.setName(prueba.getString("nombre"));
                                     proyecto.setUsername(prueba.getString("username"));
                                     proyecto.setDay(prueba.getInt("dia_proyecto"));
-                                    System.out.println(proyecto.getName() + " " + proyecto.getUsername() + " "+ proyecto.getDay());
+                                    proyecto.setMonth(prueba.getInt("mes_proyecto"));
+                                    proyecto.setYear(prueba.getInt("year_proyecto"));
                                     projectManager.getYourProjects().add(proyecto);
-                                    System.out.println(projectManager.getYourProjects().indexOf(proyecto));
-                                    System.out.println(j);
-                                    System.out.println(projectManager.getYourProjects().get(j).getName());
 
+                                }
+                                //oos.writeObject(projectManager);
+                                //dos.writeUTF("Logged");
+                                for (int i = 0; i < projectManager.getYourProjects().size(); i++){
 
-                                    j++;
+                                    System.out.println("Proyecto " + (i+1) + ": " + projectManager.getYourProjects().get(i).getName());
+                                }
+
+                                prueba = conn.selectQuery("SELECT DISTINCT Po.* FROM proyecto AS Po, usuarioproyecto AS Up, usuario AS Us WHERE Us.username LIKE 'manusahun' AND Us.username = Up.username AND Up.id_proyecto = Po.id_proyecto;");
+
+                                while(prueba.next()){
+
+                                    Project proyecto = new Project();
+                                    proyecto.setName(prueba.getString("nombre"));
+                                    proyecto.setUsername(prueba.getString("username"));
+                                    proyecto.setDay(prueba.getInt("dia_proyecto"));
+                                    proyecto.setMonth(prueba.getInt("mes_proyecto"));
+                                    proyecto.setYear(prueba.getInt("year_proyecto"));
+                                    projectManager.getSharedProjects().add(proyecto);
+
+                                }
+                                //oos.writeObject(projectManager);
+                                //dos.writeUTF("Logged");
+                                for (int i = 0; i < projectManager.getSharedProjects().size(); i++){
+
+                                    System.out.println("Proyecto compartido " + (i+1) + ": " + projectManager.getSharedProjects().get(i).getName());
+                                }
+
+                                prueba = conn.selectQuery("SELECT * FROM Usuario;");
+
+                                while(prueba.next()){
+
+                                    String nombre;
+                                    nombre = prueba.getString("username");
+                                    projectManager.getUsuarios().add(nombre);
+
                                 }
                                 oos.writeObject(projectManager);
                                 dos.writeUTF("Logged");
-                                for (int i = 0; i < projectManager.getYourProjects().size(); i++){
+                                for (int i = 0; i < projectManager.getUsuarios().size(); i++){
 
-                                    System.out.println(projectManager.getYourProjects().get(i).getName());
+                                    System.out.println("Usuario " + (i+1) + ": " + projectManager.getUsuarios().get(i));
                                 }
-
 
                             } else {
                                 oos.writeObject(projectManager);

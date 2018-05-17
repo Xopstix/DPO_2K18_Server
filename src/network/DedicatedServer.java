@@ -1,6 +1,6 @@
 package network;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+//import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import model.ProjectManager;
 import model.Project;
 import utility.ConectorDB;
@@ -51,7 +51,6 @@ public class DedicatedServer extends Thread{
     public synchronized void run(){
 
         ProjectManager projectManager = new ProjectManager() ;
-        Project proyecto = new Project();
         status = false;
 
         while (true) {
@@ -129,7 +128,7 @@ public class DedicatedServer extends Thread{
                                 int j = 0;
                                 while(prueba.next()){
 
-
+                                    Project proyecto = new Project();
                                     proyecto.setName(prueba.getString("nombre"));
                                     proyecto.setUsername(prueba.getString("username"));
                                     proyecto.setDay(prueba.getInt("dia_proyecto"));

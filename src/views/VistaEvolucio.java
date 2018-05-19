@@ -9,6 +9,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by checho y manu on 08/04/2018.
@@ -27,6 +29,10 @@ public class VistaEvolucio extends JFrame{
     private JLabel jly;
     private int x = 10;
     private int y = 10;
+    private int day;
+    private int month;
+    private int year;
+
 
     public VistaEvolucio() throws IOException{
 
@@ -113,33 +119,36 @@ public class VistaEvolucio extends JFrame{
         this.add(jpCentral);
 
 
-        this.setSize(800,400);
+        this.setSize(800,600);
         this.setResizable(true);
         this.setTitle("User Evolution");
         this.setLocationRelativeTo(null);
 
     }
 
-    public void actualizarVista(int id){
+    public void actualizarVista(int id, int[] num_proyectos){
         if(id == 0){
-            x = 7 + 1;
+            x = 10 + 1;
             y = 10;
             jpBottom.setXY(x,y);
+            jpBottom.setNumProjects(num_proyectos);
             jpBottom.updateUI();
             jlx.setText("Weeks");
 
         }
         if(id == 1){
-            x = 31 + 1;
-            y = 10;
+            x = 12 + 1;
+            y = 20;
             jpBottom.setXY(x,y);
+            jpBottom.setNumProjects(num_proyectos);
             jpBottom.updateUI();
             jlx.setText("Months");
         }
         if(id == 2){
-            x = ~~(365/10) + 1;
-            y = 10;
+            x = 5 + 1;
+            y = 30;
             jpBottom.setXY(x,y);
+            jpBottom.setNumProjects(num_proyectos);
             jpBottom.updateUI();
             jlx.setText("Years");
         }
@@ -155,5 +164,12 @@ public class VistaEvolucio extends JFrame{
         this.jbMes.addActionListener(serverController);
         this.jbSetmana.addActionListener(serverController);
 
+    }
+    public void getDate (){
+        java.util.Date fecha = new Date();
+
+        day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        month = (Calendar.getInstance().get(Calendar.MONTH)) + 1;
+        year = Calendar.getInstance().get(Calendar.YEAR);
     }
 }

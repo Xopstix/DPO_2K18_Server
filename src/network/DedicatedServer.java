@@ -1,6 +1,7 @@
 package network;
 
 //import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+import controller.ServerController;
 import model.ProjectManager;
 import model.Project;
 import utility.ConectorDB;
@@ -24,9 +25,10 @@ public class DedicatedServer extends Thread{
     private DataInputStream dis;
     private ArrayList<DedicatedServer> clients;
     private ConectorDB conn;
-    private  boolean status;
+    private boolean status;
     private String mode;
     private Object newObject;
+    private ServerController serverController;
 
     public DedicatedServer(Socket sClient, ArrayList<DedicatedServer> clients, ConectorDB conn) {
         this.sClient = sClient;
@@ -106,7 +108,6 @@ public class DedicatedServer extends Thread{
                         //BBDD
                         ResultSet prueba;
                         status = false;
-
                         //Login BBDD
                         //ConectorDB conn = new ConectorDB("adminOrg", "cartofen", "organizerDB", 8889);
                         conn.connect();
@@ -231,6 +232,7 @@ public class DedicatedServer extends Thread{
         }
 
     }
+
 }
 
 

@@ -248,7 +248,8 @@ public class Main {
 
         Server server = new Server(conn);
 
-        ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop);
+        ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop, conn);
+
         vistaPrincipal.registrarControladorBoton(serverController);
         vistaEvolucio.registrarControladorBoton(serverController);
         vistaTop.registrarControladorBoton(serverController);

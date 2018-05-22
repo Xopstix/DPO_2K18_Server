@@ -3,6 +3,7 @@ import config.ObjectFile;
 import controller.ServerController;
 import network.Server;
 import utility.ConectorDB;
+import views.UsersView;
 import views.VistaEvolucio;
 import views.VistaPrincipal;
 import views.VistaTop;
@@ -211,6 +212,7 @@ public class Main {
         VistaPrincipal vistaPrincipal = null;
         VistaEvolucio vistaEvolucio = null;
         VistaTop vistaTop = null;
+        UsersView vistaUsers = null;
         //Gestion BBDD
         ResultSet prueba;
 
@@ -240,6 +242,7 @@ public class Main {
             vistaPrincipal = new VistaPrincipal();
             vistaEvolucio = new VistaEvolucio();
             vistaTop = new VistaTop();
+            vistaUsers = new UsersView();
 
         }catch (IOException e){
 
@@ -248,11 +251,12 @@ public class Main {
 
         Server server = new Server(conn);
 
-        ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop, conn);
+        ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop, vistaUsers, conn);
 
         vistaPrincipal.registrarControladorBoton(serverController);
         vistaEvolucio.registrarControladorBoton(serverController);
         vistaTop.registrarControladorBoton(serverController);
+        vistaUsers.registrarControladorBoton(serverController);
         vistaPrincipal.setVisible(true);
 
         server.run();

@@ -181,7 +181,7 @@ public class DedicatedServer extends Thread{
                                     }
                                 }
 
-                                prueba = conn.selectQuery("SELECT DISTINCT Po.* FROM proyecto AS Po, usuarioproyecto AS Up, usuario AS Us WHERE Us.username LIKE 'manusahun' AND Us.username = Up.username AND Up.id_proyecto = Po.id_proyecto;");
+                                prueba = conn.selectQuery("SELECT DISTINCT Po.* FROM proyecto AS Po, usuarioproyecto AS Up, usuario AS Us WHERE Us.username LIKE '" + projectManager.getUsuari().getCorreu() + "' AND Us.username = Up.username AND Up.id_proyecto = Po.id_proyecto AND Po.username NOT LIKE '" + projectManager.getUsuari().getCorreu() + "';");
 
                                 while(prueba.next()){
 
@@ -226,6 +226,9 @@ public class DedicatedServer extends Thread{
                             System.out.println("Problema al recuperar les dades de la BBDD 2...");
                         }
 
+                        System.out.println("Imagen: " + projectManager.getProject().getBackground());
+
+
                     }
                 }
 
@@ -248,8 +251,10 @@ public class DedicatedServer extends Thread{
                         prueba = conn.selectQuery("SELECT id_proyecto FROM Proyecto ORDER BY id_proyecto DESC LIMIT 1");
                         prueba.next();
                         int id_projecte = prueba.getInt("id_proyecto");
+                        //System.out.println("PATATA " + projectManager.getProject().getMembres().size());
                         for(int i = 0; i < projectManager.getProject().getMembres().size() ; i++) {
                             conn.insertQuery("INSERT INTO `UsuarioProyecto`(`username`,`id_proyecto`) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
+                            //System.out.println("Ur mom gay");
                         }
                         oos.writeObject(projectManager);
                         dos.writeUTF("VALORES RECOGIDOS");

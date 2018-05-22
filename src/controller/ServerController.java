@@ -3,6 +3,7 @@ package controller;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import model.ProjectManager;
 import utility.ConectorDB;
+import views.UsersView;
 import views.VistaEvolucio;
 import views.VistaPrincipal;
 import views.VistaTop;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,6 +25,7 @@ public class ServerController implements ActionListener{
     private VistaPrincipal vistaPrincipal;
     private VistaEvolucio vistaEvolucio;
     private VistaTop vistaTop;
+    private UsersView vistaUsers;
     private ConectorDB conn;
     private int day;
     private int month;
@@ -36,11 +39,12 @@ public class ServerController implements ActionListener{
      * @param vistaPrincipal vista principal del servidor
      * @param projectManager
      */
-    public ServerController(VistaPrincipal vistaPrincipal, VistaEvolucio vistaEvolucio, VistaTop vistaTop, ConectorDB conn){
+    public ServerController(VistaPrincipal vistaPrincipal, VistaEvolucio vistaEvolucio, VistaTop vistaTop, UsersView vistaUsers, ConectorDB conn){
 
         this.vistaPrincipal = vistaPrincipal;
         this.vistaEvolucio = vistaEvolucio;
         this.vistaTop = vistaTop;
+        this.vistaUsers = vistaUsers;
         this.conn = conn;
 
     }
@@ -56,7 +60,7 @@ public class ServerController implements ActionListener{
 
         if (e.getActionCommand().equals("BTN_EVOLUCION")){         //Si se quiere iniciar sesión
 
-            vistaEvolucio.setVisible(true);
+            vistaUsers.setVisible(true);
             System.out.println("Patata");
 
         }
@@ -236,6 +240,41 @@ public class ServerController implements ActionListener{
 
             //Ordena los datos por semana
             System.out.println("Ordenado por semana en Top");
+
+        }
+
+        if (e.getActionCommand().equals("BTN_MOSTRA")){
+
+            //Muestra todos los usuarios por la lista
+            System.out.println("Llista d'usuaris");
+            ResultSet prueba;
+            conn.connect();
+            ArrayList<String> usuaris = new ArrayList<String>();
+
+            prueba = conn.selectQuery("SELECT * FROM usuario;");
+            try{
+
+                while(prueba.next()){
+
+                    usuaris.add(prueba.getString("username"));
+
+                }
+
+
+            }catch(SQLException el) {
+
+                el.printStackTrace();
+
+            }
+
+            vistaUsers.actualitzarVista(usuaris);
+
+
+        }
+
+        if (e.getActionCommand().equals("BTN_CONTINUA")){
+
+            vistaEvolucio.setVisible(true);
 
         }
 

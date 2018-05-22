@@ -27,6 +27,7 @@ public class ServerController implements ActionListener{
     private int day;
     private int month;
     private int year;
+    private int week;
     private int[] num_proyectos;
 
     /**
@@ -116,6 +117,93 @@ public class ServerController implements ActionListener{
             ResultSet prueba;
             conn.connect();
             num_proyectos = new int[12];
+
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-11) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-10) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-9) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-8) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-7) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-6) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-5) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = " + "'pruebaGrafica'" + ";");
+            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[4] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-3) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-2) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[2] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-1) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[1] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-0) + " AND username = " + "'pruebaGrafica'" + ";");
+            try {
+                prueba.next();
+                num_proyectos[0] = prueba.getInt("numero");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
             //ordena los datos por mes
             System.out.println("Ordenado por mes en Evolución");
             vistaEvolucio.actualizarVista(1, num_proyectos);
@@ -160,5 +248,6 @@ public class ServerController implements ActionListener{
         day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         month = (Calendar.getInstance().get(Calendar.MONTH)) + 1;
         year = Calendar.getInstance().get(Calendar.YEAR);
+        week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
     }
 }

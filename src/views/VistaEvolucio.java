@@ -128,7 +128,7 @@ public class VistaEvolucio extends JFrame{
 
     public void actualizarVista(int id, int[] num_proyectos){
         if(id == 0){
-            x = 10 + 1;
+            x = 10;
             y = 10;
             jpBottom.setXY(x,y);
             jpBottom.setNumProjects(num_proyectos);
@@ -137,7 +137,7 @@ public class VistaEvolucio extends JFrame{
 
         }
         if(id == 1){
-            x = 12 + 1;
+            x = 12;
             y = 20;
             jpBottom.setXY(x,y);
             jpBottom.setNumProjects(num_proyectos);
@@ -145,7 +145,7 @@ public class VistaEvolucio extends JFrame{
             jlx.setText("Months");
         }
         if(id == 2){
-            x = 5 + 1;
+            x = 5;
             y = 30;
             jpBottom.setXY(x,y);
             jpBottom.setNumProjects(num_proyectos);

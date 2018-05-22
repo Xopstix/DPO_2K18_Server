@@ -2,8 +2,10 @@ package network;
 
 //import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import controller.ServerController;
+import model.Columna;
 import model.ProjectManager;
 import model.Project;
+import model.Tasca;
 import utility.ConectorDB;
 
 import java.io.*;
@@ -126,7 +128,7 @@ public class DedicatedServer extends Thread{
                             if (status) {
                                 prueba = conn.selectQuery("SELECT * FROM Proyecto AS Po, Usuario AS Us WHERE Po.username = '" + projectManager.getUsuari().getCorreu() + "' AND Po.username = Us.username");
                                 //projectManager.getProject().setName(prueba.getObject("nombre"));
-                                //int j = 0;
+                                int j = 0;
                                 while(prueba.next()){
 
                                     Project proyecto = new Project();
@@ -135,14 +137,48 @@ public class DedicatedServer extends Thread{
                                     proyecto.setDay(prueba.getInt("dia_proyecto"));
                                     proyecto.setMonth(prueba.getInt("mes_proyecto"));
                                     proyecto.setYear(prueba.getInt("year_proyecto"));
+                                    proyecto.setIdProyecto(prueba.getInt("id_proyecto"));
                                     projectManager.getYourProjects().add(proyecto);
-
+                                }
+                                for (int i = 0; i < projectManager.getYourProjects().size(); i++) {
+                                    prueba = conn.selectQuery("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = "+ projectManager.getYourProjects().get(i).getIdProyecto()+"");
+                                    //System.out.println("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = "+ projectManager.getYourProjects().get(i).getIdProyecto()+"");
+                                    while (prueba.next()) {
+                                        Columna columna = new Columna();
+                                        columna.setNom(prueba.getString("nombre"));
+                                        columna.setOrdre(prueba.getInt("orden"));
+                                        columna.setId_columna(prueba.getInt("id_columna"));
+                                        projectManager.getYourProjects().get(i).getColumnes().add(columna);
+                                    }
+                                }
+                                for (int i = 0; i < projectManager.getYourProjects().size(); i++){
+                                    for (int k = 0; k < projectManager.getYourProjects().get(i).getColumnes().size(); k++){
+                                        prueba = conn.selectQuery("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
+                                        //System.out.println("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
+                                        while (prueba.next()){
+                                            Tasca tasca = new Tasca();
+                                            tasca.setNom(prueba.getString("nombre"));
+                                            tasca.setDescripcio(prueba.getString("descripcion"));
+                                            tasca.setOrdre(prueba.getInt("orden"));
+                                            projectManager.getYourProjects().get(i).getColumnes().get(k).getTasques().add(tasca);
+                                        }
+                                    }
                                 }
                                 //oos.writeObject(projectManager);
                                 //dos.writeUTF("Logged");
                                 for (int i = 0; i < projectManager.getYourProjects().size(); i++){
+                                        System.out.println("Proyecto " + (i + 1) + ": " + projectManager.getYourProjects().get(i).getName());
+                                    try {
+                                        if(!(projectManager.getYourProjects().get(i).getColumnes().size() < 1)){
+                                            System.out.println("       - Columna 1: " + projectManager.getYourProjects().get(i).getColumnes().get(0).getNom());
+                                            if(!(projectManager.getYourProjects().get(i).getColumnes().get(0).getTasques().size() < 1)){
+                                                System.out.println("            - Tasca 1: " + projectManager.getYourProjects().get(i).getColumnes().get(0).getTasques().get(0).getNom());
+                                            }
+                                        }
 
-                                    System.out.println("Proyecto " + (i+1) + ": " + projectManager.getYourProjects().get(i).getName());
+                                    }catch (IndexOutOfBoundsException e){
+                                        e.printStackTrace();
+                                    }
                                 }
 
                                 prueba = conn.selectQuery("SELECT DISTINCT Po.* FROM proyecto AS Po, usuarioproyecto AS Up, usuario AS Us WHERE Us.username LIKE 'manusahun' AND Us.username = Up.username AND Up.id_proyecto = Po.id_proyecto;");

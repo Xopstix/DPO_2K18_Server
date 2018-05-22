@@ -31,6 +31,7 @@ public class VistaTop extends JFrame{
 
         //actual data for the table in a 2d array
         Object[][] data = new Object[][] {
+
                 {"marcL", 1, 12},
                 {"manusahun", 3, 25},
                 {"albertR", 2, 60},
@@ -45,7 +46,7 @@ public class VistaTop extends JFrame{
         //add the table to the frame
         this.add(new JScrollPane(table));
 
-        this.setSize(400, 100);
+        this.setSize(400, 200);
         this.setTitle("Top 10 Users");
         this.setLocationRelativeTo(null);
         this.setVisible(false);

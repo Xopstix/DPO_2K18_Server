@@ -1,5 +1,6 @@
 import config.Config;
 import config.ObjectFile;
+import controller.CustomListSelectionListener;
 import controller.ServerController;
 import network.Server;
 import utility.ConectorDB;
@@ -252,11 +253,12 @@ public class Main {
         Server server = new Server(conn);
 
         ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop, vistaUsers, conn);
+        CustomListSelectionListener customListSelectionListener = new CustomListSelectionListener(vistaUsers);
 
         vistaPrincipal.registrarControladorBoton(serverController);
         vistaEvolucio.registrarControladorBoton(serverController);
         vistaTop.registrarControladorBoton(serverController);
-        vistaUsers.registrarControladorBoton(serverController);
+        vistaUsers.registrarControladorBoton(serverController,customListSelectionListener);
         vistaPrincipal.setVisible(true);
 
         server.run();

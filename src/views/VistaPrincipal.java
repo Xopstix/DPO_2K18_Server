@@ -32,7 +32,7 @@ public class VistaPrincipal extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("images/fondo.jpg")),
+                    g.drawImage(ImageIO.read(new File("images/dgreen.jpg")),
                             -100, -200, null);
                 } catch (IOException e) {
                     e.printStackTrace();

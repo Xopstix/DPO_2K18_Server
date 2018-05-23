@@ -32,6 +32,7 @@ public class VistaEvolucio extends JFrame{
     private int day;
     private int month;
     private int year;
+    private String usuari;
 
 
     public VistaEvolucio() throws IOException{
@@ -41,19 +42,21 @@ public class VistaEvolucio extends JFrame{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                    g.drawImage(ImageIO.read(new File("images/dgreen.jpg")),
                             0, 0, null);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         };
+        this.jpCentral.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.white, 2), "Organizer" , TitledBorder.LEFT, TitledBorder.TOP,
+                new Font("Arial", Font.PLAIN, 16), Color.white));
         this.jpTop = new JPanel(new FlowLayout()){
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                    g.drawImage(ImageIO.read(new File("images/dgreen.jpg")),
                             0, 0, null);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -65,7 +68,7 @@ public class VistaEvolucio extends JFrame{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                    g.drawImage(ImageIO.read(new File("images/dgreen.jpg")),
                             0, 0, null);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -78,7 +81,7 @@ public class VistaEvolucio extends JFrame{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                    g.drawImage(ImageIO.read(new File("images/dgreen.jpg")),
                             0, 0, null);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -90,7 +93,7 @@ public class VistaEvolucio extends JFrame{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("images/White.jpg")),
+                    g.drawImage(ImageIO.read(new File("images/dgreen.jpg")),
                             0, 0, null);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -104,6 +107,8 @@ public class VistaEvolucio extends JFrame{
         this.jlx.setHorizontalAlignment(SwingConstants.CENTER);
         this.jly = new JLabel("Number of projects");
         this.jly.setVerticalAlignment(SwingConstants.CENTER);
+        jly.setForeground(Color.WHITE);
+        jlx.setForeground(Color.WHITE);
 
         /*this.jpCentral.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.black, 2), "Evolution", TitledBorder.LEFT, TitledBorder.TOP,
                 new Font("Arial", Font.PLAIN, 16), Color.black));*/
@@ -171,5 +176,13 @@ public class VistaEvolucio extends JFrame{
         day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         month = (Calendar.getInstance().get(Calendar.MONTH)) + 1;
         year = Calendar.getInstance().get(Calendar.YEAR);
+    }
+
+    public String getUsuari() {
+        return usuari;
+    }
+
+    public void setUsuari(String usuari) {
+        this.usuari = usuari;
     }
 }

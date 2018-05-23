@@ -1,6 +1,7 @@
 package controller;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import model.ProjectManager;
 import utility.ConectorDB;
 import views.UsersView;
@@ -72,36 +73,36 @@ public class ServerController implements ActionListener{
             conn.connect();
             num_proyectos = new int[5];
 
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-4) + " AND username = " + "'pruebaGrafica'" + ";");
-            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-4) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[4] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-3) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-3) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-2) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-2) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[2] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-1) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-1) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[1] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-0) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-0) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[0] = prueba.getInt("numero");
@@ -122,85 +123,86 @@ public class ServerController implements ActionListener{
             conn.connect();
             num_proyectos = new int[12];
 
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-11) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-11) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-11) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-10) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-10) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-9) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-9) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-8) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-8) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-7) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-7) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-6) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-6) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-5) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-5) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = " + "'pruebaGrafica'" + ";");
-            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[4] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-3) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-3) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-2) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-2) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[2] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-1) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-1) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[1] = prueba.getInt("numero");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-0) + " AND username = " + "'pruebaGrafica'" + ";");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-0) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
                 num_proyectos[0] = prueba.getInt("numero");
@@ -267,6 +269,7 @@ public class ServerController implements ActionListener{
 
         if (e.getActionCommand().equals("BTN_CONTINUA")){
 
+            vistaEvolucio.setUsuari(vistaUsers.getUsername());
             vistaEvolucio.setVisible(true);
 
         }

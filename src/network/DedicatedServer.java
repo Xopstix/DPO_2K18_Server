@@ -247,7 +247,6 @@ public class DedicatedServer extends Thread{
                         String query = "INSERT INTO Proyecto(username, nombre, year_proyecto, mes_proyecto, dia_proyecto) VALUES ('" + projectManager.getUsuari().getCorreu() + "', '" + projectManager.getProject().getName() + "', '" + projectManager.getProject().getYear() + "', '" + projectManager.getProject().getMonth() + "', '" + projectManager.getProject().getDay() + "')";
                         System.out.println(query);
                         conn.insertQuery(query);
-                        System.out.println("hola 1");
                         prueba = conn.selectQuery("SELECT id_proyecto FROM Proyecto ORDER BY id_proyecto DESC LIMIT 1");
                         prueba.next();
                         int id_projecte = prueba.getInt("id_proyecto");

@@ -253,23 +253,17 @@ public class ServerController implements ActionListener{
 
             prueba = conn.selectQuery("SELECT * FROM usuario;");
             try{
-
                 while(prueba.next()){
-
                     usuaris.add(prueba.getString("username"));
-
+                    System.out.println(usuaris.get(i));
                 }
-
-
             }catch(SQLException el) {
-
                 el.printStackTrace();
-
             }
-
+            for(int i=0; i< usuaris.size(); i++){
+                System.out.println(usuaris.get(i));
+            }
             vistaUsers.actualitzarVista(usuaris);
-
-
         }
 
         if (e.getActionCommand().equals("BTN_CONTINUA")){

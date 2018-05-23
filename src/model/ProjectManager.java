@@ -54,7 +54,6 @@ public class ProjectManager implements Serializable {
         this.mode = mode;
     }
 
-
     public ArrayList<Project> getSharedProjects() {
         return sharedProjects;
     }

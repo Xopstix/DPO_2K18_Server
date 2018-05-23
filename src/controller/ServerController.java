@@ -255,7 +255,6 @@ public class ServerController implements ActionListener{
             try{
                 while(prueba.next()){
                     usuaris.add(prueba.getString("username"));
-                    System.out.println(usuaris.get(i));
                 }
             }catch(SQLException el) {
                 el.printStackTrace();

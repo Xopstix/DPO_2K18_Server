@@ -1,16 +1,10 @@
 package views;
 
-import com.sun.security.ntlm.Server;
 import controller.ServerController;
 import model.ProjectManager;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -30,28 +24,40 @@ public class UsersView extends JFrame {
 
     public UsersView() {
 
-        jlUsuaris = new JList<String>();
-        jbContinua = new JButton("Continuar");
-        jbMostra = new JButton("Mostra Usuaris");
-        dataUsuaris = new DefaultListModel<String>();
-        jpLeft = new JPanel(new FlowLayout());
-        jpRight = new JPanel(new FlowLayout());
-        jpCentral = new JPanel(new GridLayout(1,2));
-        usuaris = new ArrayList<String>();
-
-        this.jpLeft.add(jbMostra);
-        this.jpLeft.add(jbContinua);
-        this.jpRight.add(jlUsuaris);
-        this.jpCentral.add(jpLeft);
-        this.jpCentral.add(jpRight);
-
-        this.add(jpCentral);
+        initComponents();
+        createView();
 
         this.setSize(600, 300);
         this.setTitle("Evolucio Usuaris");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
 
+    public void initComponents(){
+
+        dataUsuaris = new DefaultListModel<>();
+        jlUsuaris = new JList<>(dataUsuaris);
+
+        jbContinua = new JButton("Continuar");
+        jbMostra = new JButton("Mostra Usuaris");
+
+        jpLeft = new JPanel(new FlowLayout());
+        jpRight = new JPanel(new FlowLayout());
+        jpCentral = new JPanel(new GridLayout(1,2));
+
+        usuaris = new ArrayList<>();
+    }
+
+    public void createView (){
+
+        this.jpLeft.add(jbMostra);
+        this.jpLeft.add(jbContinua);
+        this.jpRight.add(jlUsuaris);
+
+        this.jpCentral.add(jpLeft);
+        this.jpCentral.add(jpRight);
+
+        this.getContentPane().add(jpCentral);
     }
 
     public void registrarControladorBoton(ServerController serverController){

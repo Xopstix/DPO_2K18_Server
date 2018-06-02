@@ -226,8 +226,6 @@ public class DedicatedServer extends Thread{
                             System.out.println("Problema al recuperar les dades de la BBDD 2...");
                         }
 
-                        System.out.println("Imagen: " + projectManager.getProject().getBackground());
-
 
                     }
                 }
@@ -246,15 +244,23 @@ public class DedicatedServer extends Thread{
 
                         String query = "INSERT INTO Proyecto(username, nombre, year_proyecto, mes_proyecto, dia_proyecto) VALUES ('" + projectManager.getUsuari().getCorreu() + "', '" + projectManager.getProject().getName() + "', '" + projectManager.getProject().getYear() + "', '" + projectManager.getProject().getMonth() + "', '" + projectManager.getProject().getDay() + "')";
                         System.out.println(query);
+                        System.out.println("Imagen: " + projectManager.getProject().getBackground());
                         conn.insertQuery(query);
                         prueba = conn.selectQuery("SELECT id_proyecto FROM Proyecto ORDER BY id_proyecto DESC LIMIT 1");
                         prueba.next();
                         int id_projecte = prueba.getInt("id_proyecto");
                         //System.out.println("PATATA " + projectManager.getProject().getMembres().size());
                         for(int i = 0; i < projectManager.getProject().getMembres().size() ; i++) {
-                            conn.insertQuery("INSERT INTO `UsuarioProyecto`(`username`,`id_proyecto`) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
+                            conn.insertQuery("INSERT INTO UsuarioProyecto(username,id_proyecto) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
                             //System.out.println("Ur mom gay");
                         }
+
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Amarillo', 'Amarillo', " + id_projecte);
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Verde', 'Verde', " + id_projecte);
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Naranja', 'Naranja', " + id_projecte);
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Azul', 'Azul', " + id_projecte);
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Morado', 'Morado', " + id_projecte);
+
                         oos.writeObject(projectManager);
                         dos.writeUTF("VALORES RECOGIDOS");
 
@@ -264,6 +270,31 @@ public class DedicatedServer extends Thread{
                         System.out.println("Problema al recuperar les dades de la BBDD 2...");
                     }
 
+                }
+
+                if (projectManager.getMode() == 3){
+
+                    System.out.println(projectManager.getProject().getIdProyecto());
+                    conn.insertQuery("DELETE FROM Columna WHERE id_proyecto = " + projectManager.getProject().getIdProyecto() + ";");
+                    for(int i = 0; i < projectManager.getProject().getColumnes().size(); i++){
+
+                        conn.insertQuery("INSERT INTO Columna(nombre, orden, id_proyecto) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getOrdre() + ", "+ projectManager.getProject().getIdProyecto() + ";");
+                    }
+
+                    conn.insertQuery("DELETE FROM Tasca WHERE id_proyecto = " + projectManager.getProject().getIdProyecto() + ";");
+                    for(int i = 0; i < projectManager.getProject().getColumnes().size(); i++){
+
+                        for (int j = 0; j < projectManager.getProject().getColumnes().get(i).getTasques().size(); j++){
+
+                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getEtiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getCompleta() + ";");
+                        }
+                    }
+
+                    conn.insertQuery("DELETE FROM Etiqueta WHERE id_proyecto = " + projectManager.getProject().getIdProyecto() + ";");
+                    for(int i = 0; i < 5; i++){
+
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('"+ projectManager.getProject().getEtiquetes().get(i).getNom() + "', '" + projectManager.getProject().getEtiquetes().get(i).getColor() + "', " + projectManager.getProject().getIdProyecto() + ";");
+                    }
                 }
 
             } catch(IOException | ClassNotFoundException e){

@@ -33,6 +33,7 @@ public class ServerController implements ActionListener{
     private int year;
     private int week;
     private int[] num_proyectos;
+    private  int max;
 
     /**
      * Constructor del controlador que se encarga de poner las condiciones de inicio a partir de la vista y
@@ -66,7 +67,75 @@ public class ServerController implements ActionListener{
 
         }
 
-        if (e.getActionCommand().equals("BTN_ANY")){         //Si se quiere iniciar sesión
+        if (e.getActionCommand().equals("BTN_SETMANA")){
+            max = 5;
+            this.getDate();
+            System.out.println("semana");
+            ResultSet prueba;
+            conn.connect();
+            num_proyectos = new int[5];
+
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            try {
+                prueba.next();
+                num_proyectos[4] = prueba.getInt("numero");
+
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-3) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            try {
+                prueba.next();
+                num_proyectos[3] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-2) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            try {
+                prueba.next();
+                num_proyectos[2] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-1) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            try {
+                prueba.next();
+                num_proyectos[1] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            try {
+                prueba.next();
+                num_proyectos[0] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            //ordena los datos por año
+            System.out.println("Ordenado por dia en Evolución");
+            vistaEvolucio.actualizarVista(0, num_proyectos, max);
+
+        }
+
+        if (e.getActionCommand().equals("BTN_ANY")){ //Si se quiere iniciar sesión
+            max = 5;
             this.getDate();
             System.out.println(year);
             ResultSet prueba;
@@ -78,6 +147,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[4] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -85,6 +157,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -92,6 +167,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[2] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -99,6 +177,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[1] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -106,17 +187,21 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[0] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
 
             //ordena los datos por año
             System.out.println("Ordenado por año en Evolución");
-            vistaEvolucio.actualizarVista(2, num_proyectos);
+            vistaEvolucio.actualizarVista(2, num_proyectos, max);
 
         }
 
         if (e.getActionCommand().equals("BTN_MES")){         //Si se quiere iniciar sesión
+            max = 5;
             this.getDate();
             System.out.println(month);
             ResultSet prueba;
@@ -127,49 +212,70 @@ public class ServerController implements ActionListener{
             System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-11) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_proyectos[11] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
             prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-10) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_proyectos[10] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
             prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-9) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_proyectos[9] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
             prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-8) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_proyectos[8] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
             prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-7) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_proyectos[7] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
             prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-6) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_proyectos[6] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
             prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-5) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_proyectos[5] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -178,6 +284,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[4] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -185,6 +294,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[3] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -192,6 +304,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[2] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -199,6 +314,9 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[1] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -206,23 +324,19 @@ public class ServerController implements ActionListener{
             try {
                 prueba.next();
                 num_proyectos[0] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
 
             //ordena los datos por mes
             System.out.println("Ordenado por mes en Evolución");
-            vistaEvolucio.actualizarVista(1, num_proyectos);
+            vistaEvolucio.actualizarVista(1, num_proyectos, max);
 
         }
 
-        if (e.getActionCommand().equals("BTN_SETMANA")){         //Si se quiere iniciar sesión
-
-            //Ordena los datos por semana
-            System.out.println("Ordenado por semana en Evolución");
-            vistaEvolucio.actualizarVista(0, num_proyectos);
-
-        }
 
         if (e.getActionCommand().equals("BTN_ANY2")){         //Si se quiere iniciar sesión
 

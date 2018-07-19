@@ -137,6 +137,7 @@ public class DedicatedServer extends Thread{
                                     proyecto.setDay(prueba.getInt("dia_proyecto"));
                                     proyecto.setMonth(prueba.getInt("mes_proyecto"));
                                     proyecto.setYear(prueba.getInt("year_proyecto"));
+                                    proyecto.setWeek(prueba.getInt("week_proyecto"));
                                     proyecto.setIdProyecto(prueba.getInt("id_proyecto"));
                                     projectManager.getYourProjects().add(proyecto);
                                 }
@@ -191,6 +192,7 @@ public class DedicatedServer extends Thread{
                                     proyecto.setDay(prueba.getInt("dia_proyecto"));
                                     proyecto.setMonth(prueba.getInt("mes_proyecto"));
                                     proyecto.setYear(prueba.getInt("year_proyecto"));
+                                    proyecto.setYear(prueba.getInt("week_proyecto"));
                                     projectManager.getSharedProjects().add(proyecto);
 
                                 }

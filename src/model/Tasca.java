@@ -13,9 +13,14 @@ public class Tasca implements Serializable{
     private String descripcio;
     private Etiqueta etiqueta;
     private Usuari usuari;
-    private int completa;       //0 si no está completa y 1 si está completa
 
     public int getCompleta() {
+        return completa;
+    }
+
+    private int completa;
+
+    public int isCompleta() {
         return completa;
     }
 
@@ -62,4 +67,5 @@ public class Tasca implements Serializable{
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
     }
+
 }

@@ -1,8 +1,5 @@
 package model;
 
-import sun.util.calendar.BaseCalendar;
-
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,7 +13,7 @@ public class Project implements Serializable{
 
     private String name;
     private String username;
-    private ArrayList<Usuari> membres;
+    private ArrayList<String> membres;
     private ArrayList<Columna> columnes;
     private String background;
     private ArrayList<Etiqueta> etiquetes;
@@ -40,11 +37,11 @@ public class Project implements Serializable{
         this.name = name;
     }
 
-    public ArrayList<Usuari> getMembres() {
+    public ArrayList<String> getMembres() {
         return membres;
     }
 
-    public void setMembres(ArrayList<Usuari> membres) {
+    public void setMembres(ArrayList<String> membres) {
         this.membres = membres;
     }
 
@@ -114,19 +111,19 @@ public class Project implements Serializable{
         this.username = username;
     }
 
-    public int getWeek() {
-        return week;
-    }
-
-    public void setWeek(int week) {
-        this.week = week;
-    }
-
     public int getIdProyecto() {
         return idProyecto;
     }
 
     public void setIdProyecto(int idProyecto) {
         this.idProyecto = idProyecto;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
     }
 }

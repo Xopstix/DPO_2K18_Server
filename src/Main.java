@@ -242,7 +242,7 @@ public class Main {
 
             vistaPrincipal = new VistaPrincipal();
             vistaEvolucio = new VistaEvolucio();
-            vistaTop = new VistaTop();
+            vistaTop = new VistaTop(conn);
             vistaUsers = new UsersView();
 
         }catch (IOException e){

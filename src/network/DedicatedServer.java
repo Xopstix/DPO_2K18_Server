@@ -2,10 +2,7 @@ package network;
 
 //import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import controller.ServerController;
-import model.Columna;
-import model.ProjectManager;
-import model.Project;
-import model.Tasca;
+import model.*;
 import utility.ConectorDB;
 
 import java.io.*;
@@ -162,6 +159,17 @@ public class DedicatedServer extends Thread{
                                     }
                                 }
                                 for (int i = 0; i < projectManager.getYourProjects().size(); i++){
+                                    prueba = conn.selectQuery("SELECT E.* FROM  Etiqueta AS E, Proyecto AS P WHERE E.id_proyecto = P.id_proyecto AND P.id_proyecto = " + projectManager.getYourProjects().get(i).getIdProyecto() + ";");
+                                    if(prueba != null) {
+                                        while (prueba.next()) {
+                                            Etiqueta etiqueta = new Etiqueta();
+                                            etiqueta.setId_etiqueta(prueba.getInt("id_etiqueta"));
+                                            projectManager.getYourProjects().get(i).getEtiquetes().add(etiqueta);
+
+                                        }
+                                    }
+                                }
+                                for (int i = 0; i < projectManager.getYourProjects().size(); i++){
                                     for (int k = 0; k < projectManager.getYourProjects().get(i).getColumnes().size(); k++){
                                         prueba = conn.selectQuery("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
                                         //System.out.println("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
@@ -171,11 +179,14 @@ public class DedicatedServer extends Thread{
                                                 tasca.setNom(prueba.getString("nombre"));
                                                 tasca.setDescripcio(prueba.getString("descripcion"));
                                                 tasca.setOrdre(prueba.getInt("orden"));
+                                                tasca.setId_etiqueta(prueba.getInt("id_etiqueta"));
                                                 projectManager.getYourProjects().get(i).getColumnes().get(k).getTasques().add(tasca);
+
                                             }
                                         }
                                     }
                                 }
+
                                 //oos.writeObject(projectManager);
                                 //dos.writeUTF("Logged");
                                 for (int i = 0; i < projectManager.getYourProjects().size(); i++){
@@ -302,7 +313,7 @@ public class DedicatedServer extends Thread{
 
                         for (int j = 0; j < projectManager.getProject().getColumnes().get(i).getTasques().size(); j++){
 
-                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getEtiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getCompleta() + ";");
+                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getId_etiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).isCompleta() + ";");
                         }
                     }
 
@@ -329,7 +340,7 @@ public class DedicatedServer extends Thread{
 
                         for (int j = 0; j < projectManager.getProject().getColumnes().get(i).getTasques().size(); j++){
 
-                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getEtiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getCompleta() + ";");
+                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getId_etiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).isCompleta() + ";");
                         }
                     }
 

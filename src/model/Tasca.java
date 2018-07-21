@@ -14,6 +14,9 @@ public class Tasca implements Serializable{
     private int id_etiqueta;
     private Usuari usuari;
     private int completa;
+    private int ano_tarea;
+    private int mes_tarea;
+    private int dia_tarea;
 
     public int isCompleta() {
         return completa;
@@ -61,5 +64,29 @@ public class Tasca implements Serializable{
 
     public void setId_etiqueta(int id_etiqueta) {
         this.id_etiqueta = id_etiqueta;
+    }
+
+    public int getAno_tarea() {
+        return ano_tarea;
+    }
+
+    public void setAno_tarea(int ano_tarea) {
+        this.ano_tarea = ano_tarea;
+    }
+
+    public int getMes_tarea() {
+        return mes_tarea;
+    }
+
+    public void setMes_tarea(int mes_tarea) {
+        this.mes_tarea = mes_tarea;
+    }
+
+    public int getDia_tarea() {
+        return dia_tarea;
+    }
+
+    public void setDia_tarea(int dia_tarea) {
+        this.dia_tarea = dia_tarea;
     }
 }

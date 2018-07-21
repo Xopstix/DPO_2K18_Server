@@ -3,13 +3,10 @@ package views;
 import controller.ServerController;
 import utility.ConectorDB;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.io.File;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,20 +42,21 @@ public class VistaTop extends JFrame{
             //Recorremos toda la tabla de usuarios de la BBDD.
             while (prueba.next()) {
                 System.out.println("1");
+
                 tasquesCompletes = conn.selectQuery("SELECT COUNT(*) AS completes FROM Tarea WHERE Completa = 1 AND username = '" + prueba.getString("username") +"';");
-                while(tasquesCompletes.next()) {
+                if(tasquesCompletes != null) {
+                    while (tasquesCompletes.next()) {
+                        tasquesIncompletes = conn.selectQuery("SELECT COUNT(*) AS incompletes FROM Tarea WHERE Completa = 0 AND username = '" + prueba.getString("username") + "';");
+                        if(tasquesIncompletes != null) {
+                            while (tasquesIncompletes.next()) {
 
-                    tasquesIncompletes = conn.selectQuery("SELECT COUNT(*) AS incompletes FROM Tarea WHERE Completa = 0 AND username = '" + prueba.getString("username") + "';");
-                    while(tasquesIncompletes.next()){
+                                Object[] newRow = {prueba.getString("username"), tasquesIncompletes.getInt("incompletes"), tasquesCompletes.getInt("completes")};
+                                dtm.addRow(newRow);
 
-                        Object[] newRow ={prueba.getString("username"), tasquesIncompletes.getInt("incompletes"), tasquesCompletes.getInt("completes") };
-                        dtm.addRow(newRow);
-
+                            }
+                        }
                     }
-
                 }
-
-
             }
 
         } catch (SQLException e) {
@@ -68,6 +66,8 @@ public class VistaTop extends JFrame{
 
         //create table with data
 
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(dtm);
+        table.setRowSorter(sorter);
 
         table.setEnabled(false); //para que no se pueda modificar
 

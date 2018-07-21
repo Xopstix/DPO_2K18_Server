@@ -279,14 +279,14 @@ public class DedicatedServer extends Thread{
                         //System.out.println("PATATA " + projectManager.getProject().getMembres().size());
                         for(int i = 0; i < projectManager.getProject().getMembres().size() ; i++) {
                             conn.insertQuery("INSERT INTO UsuarioProyecto(username,id_proyecto) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
-                            //System.out.println("Ur mom gay");
+
                         }
 
-                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Verde', 'Verde', " + id_projecte);
-                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Naranja', 'Naranja', " + id_projecte);
-                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Amarillo', 'Amarillo', " + id_projecte);
-                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Azul', 'Azul', " + id_projecte);
-                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Morado', 'Morado', " + id_projecte);
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Verde', 'Verde', '" + id_projecte+"')");
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Naranja', 'Naranja','" + id_projecte+"')");
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Amarillo', 'Amarillo', '" + id_projecte+"')");
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Azul', 'Azul', '" + id_projecte+"')");
+                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Morado', 'Morado', '" + id_projecte+"')");
 
                         oos.writeObject(projectManager);
                         dos.writeUTF("VALORES RECOGIDOS");

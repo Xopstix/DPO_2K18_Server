@@ -330,14 +330,130 @@ public class DedicatedServer extends Thread{
                 }
                 //Update de la vista del proyecto a tiempo real
                 if(projectManager.getMode() == 4){
+                    ResultSet prueba;
+                    conn.connect();
+                    prueba = conn.selectQuery("SELECT * FROM Proyecto AS Po, Usuario AS Us WHERE Po.username = '" + projectManager.getUsuari().getCorreu() + "' AND Po.username = Us.username");
+                    //projectManager.getProject().setName(prueba.getObject("nombre"));
+                    int j = 0;
+                    if(prueba != null) {
+                        while (prueba.next()) {
+
+                            Project proyecto = new Project();
+                            proyecto.setName(prueba.getString("nombre"));
+                            proyecto.setUsername(prueba.getString("username"));
+                            proyecto.setDay(prueba.getInt("dia_proyecto"));
+                            proyecto.setMonth(prueba.getInt("mes_proyecto"));
+                            proyecto.setYear(prueba.getInt("year_proyecto"));
+                            proyecto.setWeek(prueba.getInt("week_proyecto"));
+                            proyecto.setIdProyecto(prueba.getInt("id_proyecto"));
+                            projectManager.getYourProjects().add(proyecto);
+                        }
+                    }
+                    for (int i = 0; i < projectManager.getYourProjects().size(); i++) {
+                        prueba = conn.selectQuery("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = "+ projectManager.getYourProjects().get(i).getIdProyecto()+"");
+
+                        //System.out.println("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = "+ projectManager.getYourProjects().get(i).getIdProyecto()+"");
+                        if(prueba != null) {
+                            while (prueba.next()) {
+                                Columna columna = new Columna();
+                                columna.setNom(prueba.getString("nombre"));
+                                columna.setOrdre(prueba.getInt("orden"));
+                                columna.setId_columna(prueba.getInt("id_columna"));
+                                projectManager.getYourProjects().get(i).getColumnes().add(columna);
+                            }
+                        }
+                    }
+                    for (int i = 0; i < projectManager.getYourProjects().size(); i++){
+                        prueba = conn.selectQuery("SELECT E.* FROM  Etiqueta AS E, Proyecto AS P WHERE E.id_proyecto = P.id_proyecto AND P.id_proyecto = " + projectManager.getYourProjects().get(i).getIdProyecto() + ";");
+                        if(prueba != null) {
+                            while (prueba.next()) {
+                                Etiqueta etiqueta = new Etiqueta();
+                                etiqueta.setId_etiqueta(prueba.getInt("id_etiqueta"));
+                                projectManager.getYourProjects().get(i).getEtiquetes().add(etiqueta);
+
+                            }
+                        }
+                    }
+                    for (int i = 0; i < projectManager.getYourProjects().size(); i++){
+                        for (int k = 0; k < projectManager.getYourProjects().get(i).getColumnes().size(); k++){
+                            prueba = conn.selectQuery("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
+                            //System.out.println("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
+                            if(prueba != null) {
+                                while (prueba.next()) {
+                                    Tasca tasca = new Tasca();
+                                    tasca.setNom(prueba.getString("nombre"));
+                                    tasca.setDescripcio(prueba.getString("descripcion"));
+                                    tasca.setOrdre(prueba.getInt("orden"));
+                                    tasca.setId_etiqueta(prueba.getInt("id_etiqueta"));
+                                    tasca.setAno_tarea(prueba.getInt("ano_tarea"));
+                                    tasca.setMes_tarea(prueba.getInt("mes_tarea"));
+                                    tasca.setDia_tarea(prueba.getInt("dia_tarea"));
+                                    projectManager.getYourProjects().get(i).getColumnes().get(k).getTasques().add(tasca);
+
+                                }
+                            }
+                        }
+                    }
+
+                    //oos.writeObject(projectManager);
+                    //dos.writeUTF("Logged");
+                    for (int i = 0; i < projectManager.getYourProjects().size(); i++){
+                        System.out.println("Proyecto " + (i + 1) + ": " + projectManager.getYourProjects().get(i).getName());
+                        try {
+                            if(!(projectManager.getYourProjects().get(i).getColumnes().size() < 1)){
+                                System.out.println("       - Columna 1: " + projectManager.getYourProjects().get(i).getColumnes().get(0).getNom());
+                                if(!(projectManager.getYourProjects().get(i).getColumnes().get(0).getTasques().size() < 1)){
+                                    System.out.println("            - Tasca 1: " + projectManager.getYourProjects().get(i).getColumnes().get(0).getTasques().get(0).getNom());
+                                }
+                            }
+
+                        }catch (IndexOutOfBoundsException e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    prueba = conn.selectQuery("SELECT DISTINCT Po.* FROM proyecto AS Po, usuarioproyecto AS Up, usuario AS Us WHERE Us.username LIKE '" + projectManager.getUsuari().getCorreu() + "' AND Us.username = Up.username AND Up.id_proyecto = Po.id_proyecto AND Po.username NOT LIKE '" + projectManager.getUsuari().getCorreu() + "';");
+                    if(prueba != null) {
+                        while (prueba.next()) {
+
+                            Project proyecto = new Project();
+                            proyecto.setName(prueba.getString("nombre"));
+                            proyecto.setUsername(prueba.getString("username"));
+                            proyecto.setDay(prueba.getInt("dia_proyecto"));
+                            proyecto.setMonth(prueba.getInt("mes_proyecto"));
+                            proyecto.setYear(prueba.getInt("year_proyecto"));
+                            proyecto.setYear(prueba.getInt("week_proyecto"));
+                            projectManager.getSharedProjects().add(proyecto);
+
+                        }
+                    }
+                    //oos.writeObject(projectManager);
+                    //dos.writeUTF("Logged");
+                    for (int i = 0; i < projectManager.getSharedProjects().size(); i++){
+
+                        System.out.println("Proyecto compartido " + (i+1) + ": " + projectManager.getSharedProjects().get(i).getName());
+                    }
+
+                    prueba = conn.selectQuery("SELECT * FROM Usuario;");
+                    if(prueba != null) {
+                        while (prueba.next()) {
+
+                            String nombre;
+                            nombre = prueba.getString("username");
+                            projectManager.getUsuarios().add(nombre);
+
+                        }
+                    }
                     oos.writeObject(projectManager);
-                    dos.writeUTF("PULL COMPLETE");
+                    dos.writeUTF("PULLME");
 
 
                 }
 
             } catch(IOException | ClassNotFoundException e){
                 clients.remove(this);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 

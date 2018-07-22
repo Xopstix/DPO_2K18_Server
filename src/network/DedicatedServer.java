@@ -151,7 +151,7 @@ public class DedicatedServer extends Thread{
                                     }
                                 }
                                 for (int i = 0; i < projectManager.getYourProjects().size(); i++) {
-                                    prueba = conn.selectQuery("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Co.eliminada = 0 AND Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = " + projectManager.getYourProjects().get(i).getIdProyecto() + "");
+                                    prueba = conn.selectQuery("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Co.eliminada = 0 AND Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = " + projectManager.getYourProjects().get(i).getIdProyecto() + ";");
 
                                     //System.out.println("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = "+ projectManager.getYourProjects().get(i).getIdProyecto()+"");
                                     if (prueba != null) {
@@ -183,7 +183,7 @@ public class DedicatedServer extends Thread{
                                 }
                                 for (int i = 0; i < projectManager.getYourProjects().size(); i++) {
                                     for (int k = 0; k < projectManager.getYourProjects().get(i).getColumnes().size(); k++) {
-                                        prueba = conn.selectQuery("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = " + projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna() + "");
+                                        prueba = conn.selectQuery("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = " + projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna() + ";");
                                         //System.out.println("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
                                         if (prueba != null) {
                                             while (prueba.next()) {
@@ -233,14 +233,14 @@ public class DedicatedServer extends Thread{
                                         proyecto.setMonth(prueba.getInt("mes_proyecto"));
                                         proyecto.setYear(prueba.getInt("year_proyecto"));
                                         proyecto.setYear(prueba.getInt("week_proyecto"));
+                                        proyecto.setIdProyecto(prueba.getInt("id_proyecto"));
                                         projectManager.getSharedProjects().add(proyecto);
 
                                     }
                                 }
                                 for (int i = 0; i < projectManager.getSharedProjects().size(); i++) {
-                                    prueba = conn.selectQuery("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Co.eliminada = 0 AND Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = " + projectManager.getSharedProjects().get(i).getIdProyecto() + "");
-
-                                    //System.out.println("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = "+ projectManager.getYourProjects().get(i).getIdProyecto()+"");
+                                    prueba = conn.selectQuery("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Co.eliminada = 0 AND Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = " + projectManager.getSharedProjects().get(i).getIdProyecto() + ";");
+                                    System.out.println("SELECT * FROM Columna AS Co, Proyecto AS Pr WHERE Co.eliminada = 0 AND Pr.id_proyecto = Co.id_proyecto AND Pr.id_proyecto = " + projectManager.getSharedProjects().get(i).getIdProyecto() + ";");
                                     if (prueba != null) {
                                         while (prueba.next()) {
                                             //cargamos los datos de las columnas
@@ -255,6 +255,7 @@ public class DedicatedServer extends Thread{
                                 }
                                 for (int i = 0; i < projectManager.getSharedProjects().size(); i++) {
                                     prueba = conn.selectQuery("SELECT E.* FROM  Etiqueta AS E, Proyecto AS P WHERE E.id_proyecto = P.id_proyecto AND P.id_proyecto = " + projectManager.getSharedProjects().get(i).getIdProyecto() + ";");
+                                    System.out.println("SELECT E.* FROM  Etiqueta AS E, Proyecto AS P WHERE E.id_proyecto = P.id_proyecto AND P.id_proyecto = " + projectManager.getSharedProjects().get(i).getIdProyecto() + ";");
                                     if (prueba != null) {
                                         while (prueba.next()) {
                                             //cargamos los datos de las etiquetas
@@ -270,7 +271,7 @@ public class DedicatedServer extends Thread{
                                 }
                                 for (int i = 0; i < projectManager.getSharedProjects().size(); i++) {
                                     for (int k = 0; k < projectManager.getSharedProjects().get(i).getColumnes().size(); k++) {
-                                        prueba = conn.selectQuery("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = " + projectManager.getSharedProjects().get(i).getColumnes().get(k).getId_columna() + "");
+                                        prueba = conn.selectQuery("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = " + projectManager.getSharedProjects().get(i).getColumnes().get(k).getId_columna() + ";");
                                         //System.out.println("SELECT * FROM Tarea AS Ta, Columna AS Co WHERE Co.id_columna = Ta.id_columna AND Co.id_columna = "+projectManager.getYourProjects().get(i).getColumnes().get(k).getId_columna()+"");
                                         if (prueba != null) {
                                             while (prueba.next()) {
@@ -294,6 +295,20 @@ public class DedicatedServer extends Thread{
                                 for (int i = 0; i < projectManager.getSharedProjects().size(); i++) {
 
                                     System.out.println("Proyecto compartido " + (i + 1) + ": " + projectManager.getSharedProjects().get(i).getName());
+                                }
+                                for (int i = 0; i < projectManager.getSharedProjects().size(); i++) {
+                                    System.out.println("Proyecto " + (i + 1) + ": " + projectManager.getSharedProjects().get(i).getName());
+                                    try {
+                                        if (!(projectManager.getSharedProjects().get(i).getColumnes().size() < 1)) {
+                                            System.out.println("       - Columna 1: " + projectManager.getSharedProjects().get(i).getColumnes().get(0).getNom());
+                                            if (!(projectManager.getSharedProjects().get(i).getColumnes().get(0).getTasques().size() < 1)) {
+                                                System.out.println("            - Tasca 1: " + projectManager.getSharedProjects().get(i).getColumnes().get(0).getTasques().get(0).getNom());
+                                            }
+                                        }
+
+                                    } catch (IndexOutOfBoundsException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
 
                                 prueba = conn.selectQuery("SELECT * FROM Usuario;");

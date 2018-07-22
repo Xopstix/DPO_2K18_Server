@@ -41,6 +41,7 @@ public class UsersView extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    //inicializa todos los componentes de la vista para tenerlos creados y no tener que re-asignar listeners
     public void initComponents(){
 
         dataUsuaris = new DefaultListModel<>();
@@ -81,6 +82,7 @@ public class UsersView extends JFrame {
         usuaris = new ArrayList<>();
     }
 
+    //dispone los componentes en la vista
     public void createView (){
 
         this.jpTop.add(jbMostra);

@@ -24,7 +24,7 @@ public class VistaPrincipal extends JFrame {
     private JPanel jp3;
     private JPanel jp4;
 
-
+    // vista inicial que te permite seleccionar una de las dos funcionalidades del server, ya sea ver el top de contribuidores o ver la evolucion de uno en concreto
     public VistaPrincipal() throws IOException{
 
         this.jpCentral = new JPanel(new FlowLayout()){

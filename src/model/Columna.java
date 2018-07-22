@@ -13,6 +13,7 @@ public class Columna implements Serializable{
     private int ordre;
     private ArrayList<Tasca> tasques;
     private int id_columna;
+    private int eliminado;
 
     public Columna(){
         tasques = new ArrayList<>();
@@ -48,5 +49,13 @@ public class Columna implements Serializable{
 
     public void setId_columna(int id_columna) {
         this.id_columna = id_columna;
+    }
+
+    public int getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(int eliminado) {
+        this.eliminado = eliminado;
     }
 }

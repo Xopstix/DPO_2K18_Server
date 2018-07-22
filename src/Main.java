@@ -250,17 +250,20 @@ public class Main {
             e.printStackTrace();
         }
 
+        //Conexion con el servidor
         Server server = new Server(conn);
 
         ServerController serverController = new ServerController(vistaPrincipal, vistaEvolucio, vistaTop, vistaUsers, conn);
         CustomListSelectionListener customListSelectionListener = new CustomListSelectionListener(vistaUsers);
 
+        //Registrar los controladores
         vistaPrincipal.registrarControladorBoton(serverController);
         vistaEvolucio.registrarControladorBoton(serverController);
         vistaTop.registrarControladorBoton(serverController);
         vistaUsers.registrarControladorBoton(serverController,customListSelectionListener);
         vistaPrincipal.setVisible(true);
 
+        //correr el servidor
         server.run();
 
     }

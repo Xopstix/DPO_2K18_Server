@@ -26,7 +26,8 @@ public class DrawPanel extends JPanel {
     private int padding = 25;
     private int labelPadding = 25;
     private int pointWidth = 4;
-    private int proyectos[] = {0,4,1,0,3};
+    // por defecto que muestre una grafica general vacia sin datos
+    private int proyectos[] = {0,0,0,0,0};
     private int year;
     private int month;
     private int day;
@@ -98,10 +99,12 @@ public class DrawPanel extends JPanel {
 
 
     }
+    //funcion que fija los ejes X y Y de la grafica
     public void setXY(int x, int y){
         this.numberYDivisions = y;
         this.numbDays = x;
     }
+    //funcion que nos permite fijar el numero de tascas
     public void setNumProjects(int[] proyectos){
         this.proyectos = proyectos;
     }

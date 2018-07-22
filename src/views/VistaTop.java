@@ -32,6 +32,7 @@ public class VistaTop extends JFrame{
         DefaultTableModel dtm= new DefaultTableModel(data, columns);
         JTable table = new JTable(dtm);
 
+        //distintos barridos de la BBDD necesarios para la informacion de la tabla
         ResultSet prueba;
         ResultSet tasquesCompletes;
         ResultSet tasquesIncompletes;
@@ -42,7 +43,7 @@ public class VistaTop extends JFrame{
             //Recorremos toda la tabla de usuarios de la BBDD.
             while (prueba.next()) {
                 System.out.println("1");
-
+                //Se sacan los valores de las tascas, completas o no y del usuario relacionado
                 tasquesCompletes = conn.selectQuery("SELECT COUNT(*) AS completes FROM Tarea WHERE Completa = 1 AND username = '" + prueba.getString("username") +"';");
                 if(tasquesCompletes != null) {
                     while (tasquesCompletes.next()) {
@@ -51,6 +52,7 @@ public class VistaTop extends JFrame{
                             while (tasquesIncompletes.next()) {
 
                                 Object[] newRow = {prueba.getString("username"), tasquesIncompletes.getInt("incompletes"), tasquesCompletes.getInt("completes")};
+                                // se añade una fila a la tabla
                                 dtm.addRow(newRow);
 
                             }

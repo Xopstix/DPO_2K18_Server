@@ -37,6 +37,7 @@ public class VistaEvolucio extends JFrame{
 
     public VistaEvolucio() throws IOException{
 
+        // se printa un grafico general por pantalla, a la espera de seleccionar el modo para mostrar los datos
         this.jpCentral = new JPanel(new BorderLayout()){
             @Override
             protected void paintComponent(Graphics g) {
@@ -131,6 +132,7 @@ public class VistaEvolucio extends JFrame{
 
     }
 
+    // selecciona el modo a visualizar entre dias de la semana, meses y años
     public void actualizarVista(int id, int[] num_proyectos, int max){
         if(id == 0){
             x = 7;

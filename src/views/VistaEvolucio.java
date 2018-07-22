@@ -105,7 +105,7 @@ public class VistaEvolucio extends JFrame{
         this.jbAny = new JButton("Year");
         this.jlx = new JLabel("Time");
         this.jlx.setHorizontalAlignment(SwingConstants.CENTER);
-        this.jly = new JLabel("Number of projects");
+        this.jly = new JLabel("Number of tasks");
         this.jly.setVerticalAlignment(SwingConstants.CENTER);
         jly.setForeground(Color.WHITE);
         jlx.setForeground(Color.WHITE);
@@ -133,7 +133,7 @@ public class VistaEvolucio extends JFrame{
 
     public void actualizarVista(int id, int[] num_proyectos, int max){
         if(id == 0){
-            x = 5;
+            x = 7;
             y = max;
             jpBottom.setXY(x,y);
             jpBottom.setNumProjects(num_proyectos);

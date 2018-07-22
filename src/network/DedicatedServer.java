@@ -180,6 +180,9 @@ public class DedicatedServer extends Thread{
                                                 tasca.setDescripcio(prueba.getString("descripcion"));
                                                 tasca.setOrdre(prueba.getInt("orden"));
                                                 tasca.setId_etiqueta(prueba.getInt("id_etiqueta"));
+                                                tasca.setAno_tarea(prueba.getInt("ano_tarea"));
+                                                tasca.setMes_tarea(prueba.getInt("mes_tarea"));
+                                                tasca.setDia_tarea(prueba.getInt("dia_tarea"));
                                                 projectManager.getYourProjects().get(i).getColumnes().get(k).getTasques().add(tasca);
 
                                             }
@@ -313,7 +316,7 @@ public class DedicatedServer extends Thread{
 
                         for (int j = 0; j < projectManager.getProject().getColumnes().get(i).getTasques().size(); j++){
 
-                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getId_etiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).isCompleta() + ";");
+                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa, dia_tarea, mes_tarea, ano_tarea) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getId_etiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).isCompleta() + "'," + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDia_tarea() + "'," + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getMes_tarea() + "'," + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getAno_tarea() + ";");
                         }
                     }
 
@@ -325,30 +328,12 @@ public class DedicatedServer extends Thread{
                         conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('"+ projectManager.getProject().getEtiquetes().get(i).getNom() + "', '" + projectManager.getProject().getEtiquetes().get(i).getColor() + "', " + projectManager.getProject().getIdProyecto() + ";");
                     }
                 }
+                //Update de la vista del proyecto a tiempo real
+                if(projectManager.getMode() == 4){
+                    oos.writeObject(projectManager);
+                    dos.writeUTF("PULL COMPLETE");
 
-                if (projectManager.getMode() == 3){
 
-                    System.out.println(projectManager.getProject().getIdProyecto());
-                    conn.insertQuery("DELETE FROM Columna WHERE id_proyecto = " + projectManager.getProject().getIdProyecto() + ";");
-                    for(int i = 0; i < projectManager.getProject().getColumnes().size(); i++){
-
-                        conn.insertQuery("INSERT INTO Columna(nombre, orden, id_proyecto) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getOrdre() + ", "+ projectManager.getProject().getIdProyecto() + ";");
-                    }
-
-                    conn.insertQuery("DELETE FROM Tasca WHERE id_proyecto = " + projectManager.getProject().getIdProyecto() + ";");
-                    for(int i = 0; i < projectManager.getProject().getColumnes().size(); i++){
-
-                        for (int j = 0; j < projectManager.getProject().getColumnes().get(i).getTasques().size(); j++){
-
-                            conn.insertQuery("INSERT INTO Tasca(nombre, orden, descripcion, id_columna, id_proyecto, id_etiqueta, username, completa) VALUES ('"+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getNom() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getOrdre() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getDescripcio() + "', " + projectManager.getProject().getColumnes().get(i).getId_columna() + ", " + projectManager.getProject().getIdProyecto() + ", "+ projectManager.getProject().getColumnes().get(i).getTasques().get(j).getId_etiqueta() + ", '" + projectManager.getProject().getColumnes().get(i).getTasques().get(j).getUsuari() + "', " + projectManager.getProject().getColumnes().get(i).getTasques().get(j).isCompleta() + ";");
-                        }
-                    }
-
-                    conn.insertQuery("DELETE FROM Etiqueta WHERE id_proyecto = " + projectManager.getProject().getIdProyecto() + ";");
-                    for(int i = 0; i < 5; i++){
-
-                        conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('"+ projectManager.getProject().getEtiquetes().get(i).getNom() + "', '" + projectManager.getProject().getEtiquetes().get(i).getColor() + "', " + projectManager.getProject().getIdProyecto() + ";");
-                    }
                 }
 
             } catch(IOException | ClassNotFoundException e){

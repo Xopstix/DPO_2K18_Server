@@ -32,7 +32,7 @@ public class ServerController implements ActionListener{
     private int month;
     private int year;
     private int week;
-    private int[] num_proyectos;
+    private int[] num_tareas;
     private  int max;
 
     /**
@@ -73,13 +73,11 @@ public class ServerController implements ActionListener{
             System.out.println("semana");
             ResultSet prueba;
             conn.connect();
-            num_proyectos = new int[5];
-
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
-            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            num_tareas = new int[7];
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND dia_tarea = " + (day-6) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[4] = prueba.getInt("numero");
+                num_tareas[4] = prueba.getInt("numero");
 
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
@@ -87,40 +85,62 @@ public class ServerController implements ActionListener{
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-3) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND dia_tarea = " + (day-5) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_tareas[4] = prueba.getInt("numero");
+
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-2) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND dia_tarea = " + (day-4) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[2] = prueba.getInt("numero");
+                num_tareas[4] = prueba.getInt("numero");
+
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day-1) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND dia_tarea = " + (day-3) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[1] = prueba.getInt("numero");
+                num_tareas[3] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month) + " AND dia_proyecto = " + (day) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND dia_tarea = " + (day-2) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[0] = prueba.getInt("numero");
+                num_tareas[2] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND dia_tarea = " + (day-1) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            try {
+                prueba.next();
+                num_tareas[1] = prueba.getInt("numero");
+                if(prueba.getInt("numero")> max){
+                    max = prueba.getInt("numero");
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND dia_tarea = " + (day) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
+            try {
+                prueba.next();
+                num_tareas[0] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
@@ -130,7 +150,7 @@ public class ServerController implements ActionListener{
 
             //ordena los datos por año
             System.out.println("Ordenado por dia en Evolución");
-            vistaEvolucio.actualizarVista(0, num_proyectos, max);
+            vistaEvolucio.actualizarVista(0, num_tareas, max);
 
         }
 
@@ -140,53 +160,52 @@ public class ServerController implements ActionListener{
             System.out.println(year);
             ResultSet prueba;
             conn.connect();
-            num_proyectos = new int[5];
+            num_tareas = new int[5];
 
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
-            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year-4) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[4] = prueba.getInt("numero");
+                num_tareas[4] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-3) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year-3) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_tareas[3] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-2) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year-2) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[2] = prueba.getInt("numero");
+                num_tareas[2] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-1) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year-1) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[1] = prueba.getInt("numero");
+                num_tareas[1] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year-0) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "' ;");
             try {
                 prueba.next();
-                num_proyectos[0] = prueba.getInt("numero");
+                num_tareas[0] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
@@ -196,7 +215,7 @@ public class ServerController implements ActionListener{
 
             //ordena los datos por año
             System.out.println("Ordenado por año en Evolución");
-            vistaEvolucio.actualizarVista(2, num_proyectos, max);
+            vistaEvolucio.actualizarVista(2, num_tareas, max);
 
         }
 
@@ -206,124 +225,122 @@ public class ServerController implements ActionListener{
             System.out.println(month);
             ResultSet prueba;
             conn.connect();
-            num_proyectos = new int[12];
+            num_tareas = new int[12];
 
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-11) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
-            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-11) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-11) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[11] = prueba.getInt("numero");
+                num_tareas[11] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-10) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-10) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[10] = prueba.getInt("numero");
+                num_tareas[10] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-9) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-9) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[9] = prueba.getInt("numero");
+                num_tareas[9] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-8) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-8) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[8] = prueba.getInt("numero");
+                num_tareas[8] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-7) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-7) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[7] = prueba.getInt("numero");
+                num_tareas[7] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-6) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-6) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[6] = prueba.getInt("numero");
+                num_tareas[6] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-5) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-5) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[5] = prueba.getInt("numero");
+                num_tareas[5] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
-            System.out.println("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-4) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-4) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[4] = prueba.getInt("numero");
+                num_tareas[4] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-3) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-3) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[3] = prueba.getInt("numero");
+                num_tareas[3] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-2) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-2) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[2] = prueba.getInt("numero");
+                num_tareas[2] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-1) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month-1) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[1] = prueba.getInt("numero");
+                num_tareas[1] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Proyecto WHERE year_proyecto = " + (year) + " AND mes_proyecto = " + (month-0) + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
+            prueba = conn.selectQuery("SELECT COUNT(*) AS numero FROM Tarea WHERE ano_tarea = " + (year) + " AND mes_tarea = " + (month) + " AND completa = " + 1 + " AND username = '"+ vistaEvolucio.getUsuari()+ "';");
             try {
                 prueba.next();
-                num_proyectos[0] = prueba.getInt("numero");
+                num_tareas[0] = prueba.getInt("numero");
                 if(prueba.getInt("numero")> max){
                     max = prueba.getInt("numero");
                 }
@@ -333,7 +350,7 @@ public class ServerController implements ActionListener{
 
             //ordena los datos por mes
             System.out.println("Ordenado por mes en Evolución");
-            vistaEvolucio.actualizarVista(1, num_proyectos, max);
+            vistaEvolucio.actualizarVista(1, num_tareas, max);
 
         }
 

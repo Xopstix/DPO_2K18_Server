@@ -66,7 +66,7 @@ public class ServerController implements ActionListener{
             System.out.println("Patata");
 
         }
-
+        // nos guarda todas las tareas completadas por un usuario por dias de la semana
         if (e.getActionCommand().equals("BTN_SETMANA")){
             max = 5;
             this.getDate();
@@ -153,8 +153,8 @@ public class ServerController implements ActionListener{
             vistaEvolucio.actualizarVista(0, num_tareas, max);
 
         }
-
-        if (e.getActionCommand().equals("BTN_ANY")){ //Si se quiere iniciar sesión
+        //nos guarda todas las tareas completadas por un usuario en un espacio de 5 años
+        if (e.getActionCommand().equals("BTN_ANY")){
             max = 5;
             this.getDate();
             System.out.println(year);
@@ -218,8 +218,8 @@ public class ServerController implements ActionListener{
             vistaEvolucio.actualizarVista(2, num_tareas, max);
 
         }
-
-        if (e.getActionCommand().equals("BTN_MES")){         //Si se quiere iniciar sesión
+        // nos guarda todas las tareas completadas de un usuario en los pasados 12 meses
+        if (e.getActionCommand().equals("BTN_MES")){
             max = 5;
             this.getDate();
             System.out.println(month);

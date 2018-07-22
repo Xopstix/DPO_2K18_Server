@@ -342,6 +342,7 @@ public class DedicatedServer extends Thread{
                     }
                 }
 
+                // Modo 2 nos crea el proyecto en la BBDD con todos los campos necesarios
                 if (projectManager.getMode() == 2) {
                     System.out.println(projectManager.getProject().getName());
                     //BBDD
@@ -366,7 +367,7 @@ public class DedicatedServer extends Thread{
                             conn.insertQuery("INSERT INTO UsuarioProyecto(username,id_proyecto) VALUES ('" + projectManager.getProject().getMembres().get(i) + "', '" + id_projecte + "')");
 
                         }
-
+                        //creamos las etiquetas por defecto
                         conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Verde', 'Verde', '" + id_projecte + "')");
                         conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Naranja', 'Naranja','" + id_projecte + "')");
                         conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Amarillo', 'Amarillo', '" + id_projecte + "')");
@@ -403,6 +404,7 @@ public class DedicatedServer extends Thread{
                     }
 
                 }
+                //Modo 3 de PUSH, en el que se actualizaran todos los datos de la BBDD que hayan sido modificados
                 if (projectManager.getMode() == 3) {
 
                     conn.connect();
@@ -621,7 +623,7 @@ public class DedicatedServer extends Thread{
 
 
 
-
+                        //prints de debugging
                         for (int x = 0; x < projectManager.getYourProjects().size(); x++) {
 
                             System.out.println("Proyecto0 " + (x + 1) + ": " + projectManager.getYourProjects().get(x).getName());

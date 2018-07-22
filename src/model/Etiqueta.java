@@ -10,7 +10,11 @@ import java.io.Serializable;
 public class Etiqueta implements Serializable{
 
     private String nom;
-    private Color color;
+    private String color;
+    private int id_etiqueta;
+    private int id_proyecto;
+
+
 
     public int getId_etiqueta() {
         return id_etiqueta;
@@ -20,7 +24,6 @@ public class Etiqueta implements Serializable{
         this.id_etiqueta = id_etiqueta;
     }
 
-    private int id_etiqueta;
 
     public String getNom() {
         return nom;
@@ -29,12 +32,19 @@ public class Etiqueta implements Serializable{
     public void setNom(String nom) {
         this.nom = nom;
     }
-
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
+    public int getId_proyecto() {
+        return id_proyecto;
+    }
+
+    public void setId_proyecto(int id_proyecto) {
+        this.id_proyecto = id_proyecto;
+    }
+
 }

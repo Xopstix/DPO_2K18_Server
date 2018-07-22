@@ -5,6 +5,7 @@ import controller.ServerController;
 import model.*;
 import utility.ConectorDB;
 
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.sql.ResultSet;
@@ -65,7 +66,7 @@ public class DedicatedServer extends Thread{
                 }
 
 
-                if (projectManager.getMode() == 1) {
+                if (projectManager.getMode() == 1 || projectManager.getMode() == 4) {
 
                     System.out.println(projectManager.getUsuari().getNom());
                     System.out.println(projectManager.getUsuari().getPassword());
@@ -292,6 +293,26 @@ public class DedicatedServer extends Thread{
                         conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Azul', 'Azul', '" + id_projecte + "')");
                         conn.insertQuery("INSERT INTO Etiqueta(nombre, color, id_proyecto) VALUES ('Morado', 'Morado', '" + id_projecte + "')");
 
+                        prueba = conn.selectQuery("SELECT * FROM Proyecto AS P WHERE P.id_proyecto = "+ id_projecte+";");
+                        prueba.next();
+                        Project p = new Project();
+                        p.setUsername(prueba.getString("username"));
+                        p.setName(prueba.getString("nombre"));
+                        p.setIdProyecto(id_projecte);
+                        projectManager.getYourProjects().add(p);
+
+                        prueba = conn.selectQuery("SELECT * FROM Etiqueta AS E, Proyecto AS P WHERE E.id_proyecto = P.id_proyecto AND P.id_proyecto = "+id_projecte+";");
+                        while (prueba.next()){
+                            Etiqueta e = new Etiqueta();
+                            e.setColor(prueba.getString("color"));
+                            e.setNom(prueba.getString("nombre"));
+                            e.setId_etiqueta(prueba.getInt("id_etiqueta"));
+                            e.setId_proyecto(prueba.getInt("id_proyecto"));
+                            projectManager.getYourProjects().get(projectManager.getYourProjects().size()-1).getEtiquetes().add(e);
+                        }
+
+
+
                         oos.writeObject(projectManager);
                         dos.writeUTF("VALORES RECOGIDOS");
 
@@ -352,7 +373,7 @@ public class DedicatedServer extends Thread{
                 }
                 //Update de la vista del proyecto a tiempo real
 
-                if (projectManager.getMode() == 4) {
+                if (projectManager.getMode() == 5) {
 
                     try {
 
